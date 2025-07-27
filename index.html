@@ -4,143 +4,162 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>UrbanDriveStore - Pesan Gamepass CDID</title>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron&family=Poppins&display=swap" rel="stylesheet">
   <style>
     body {
       margin: 0;
       font-family: 'Poppins', sans-serif;
       background-color: #0e0e0e;
-      color: #ffffff;
+      color: #fff;
     }
     header {
-      background-color: #1a1a1a;
-      padding: 30px;
+      background: linear-gradient(90deg, #1a1a1a, #000);
+      padding: 40px 20px;
       text-align: center;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.5);
+      position: relative;
+    }
+    header img.logo {
+      position: absolute;
+      top: 20px;
+      left: 20px;
+      width: 50px;
     }
     header h1 {
       margin: 0;
       font-size: 36px;
       color: #ffcc00;
-    }
-    .hero {
-      text-align: center;
-      padding: 40px 20px;
-    }
-    .hero p {
-      font-size: 18px;
-      color: #cccccc;
+      font-family: 'Orbitron', sans-serif;
     }
     .section {
-      max-width: 900px;
-      margin: auto;
-      padding: 30px 20px;
+      max-width: 600px;
+      margin: 40px auto;
+      background: #1f1f1f;
+      border-radius: 16px;
+      padding: 30px;
     }
-    .cards {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: 20px;
-    }
-    .card {
-      background-color: #1f1f1f;
-      border-radius: 12px;
-      padding: 20px;
-      text-align: center;
-    }
-    .card img {
-      width: 80px;
-      height: 80px;
-      margin-bottom: 10px;
-    }
-    .card h3 {
-      margin: 0 0 10px;
-      color: #ffcc00;
-      font-size: 18px;
-    }
-    .card p {
-      color: #ccc;
-      font-size: 14px;
-    }
-    .form-container {
-      background-color: #1f1f1f;
-      border-radius: 12px;
-      padding: 25px;
-      margin-top: 40px;
-    }
-    input, select, textarea {
+    form input,
+    form select,
+    form textarea {
       width: 100%;
-      padding: 12px;
-      margin-bottom: 15px;
+      padding: 14px;
+      margin-bottom: 16px;
       border: none;
-      border-radius: 8px;
-      background-color: #2b2b2b;
+      border-radius: 10px;
+      background: #2c2c2c;
       color: #fff;
+      font-size: 15px;
     }
     button {
+      width: 100%;
+      padding: 14px;
       background-color: #ffcc00;
       color: #000;
-      padding: 12px;
       font-weight: bold;
       border: none;
-      border-radius: 8px;
+      border-radius: 10px;
+      font-size: 16px;
       cursor: pointer;
-      width: 100%;
     }
-    button:hover {
-      background-color: #e6b800;
-    }
-    footer {
+    #harga-preview,
+    #total-harga {
       text-align: center;
-      padding: 20px;
-      background-color: #1a1a1a;
-      color: #999;
-      font-size: 14px;
+      font-weight: bold;
+      margin-bottom: 10px;
+    }
+    #loading {
+      display: none;
+      text-align: center;
+      margin-bottom: 15px;
+      color: #ffcc00;
     }
   </style>
 </head>
 <body>
   <header>
+    <img src="logo.png" alt="Logo" class="logo">
     <h1>UrbanDriveStore</h1>
   </header>
-  <div class="hero">
-    <p>Tempat terpercaya untuk beli Gamepass Car Driving Indonesia (CDID)</p>
-  </div>
+
   <div class="section">
-    <div class="cards">
-      <div class="card"><img src="https://tr.rbxcdn.com/14f6fd12ddfa60ce6e0a02b45c8f7d1c/150/150/Image/Png" alt="Luxury Car"><h3>Luxury Car</h3><p>259 Robux / Rp36.260</p></div>
-      <div class="card"><img src="https://tr.rbxcdn.com/700476c8d74bb2f96ee4f4444570e5c6/150/150/Image/Png" alt="Emergency Vehicle"><h3>Emergency Vehicle</h3><p>139 Robux / Rp19.460</p></div>
-      <div class="card"><img src="https://tr.rbxcdn.com/49f39adf50b3ef94bc2364ecb6e26746/150/150/Image/Png" alt="Retro Car"><h3>Retro Car</h3><p>169 Robux / Rp23.660</p></div>
-      <div class="card"><img src="https://tr.rbxcdn.com/676a61d90faedff562b4f370acfa9c58/150/150/Image/Png" alt="Rare Imports"><h3>Rare Imports</h3><p>189 Robux / Rp26.460</p></div>
-      <div class="card"><img src="https://tr.rbxcdn.com/9d3d7d303d6d328729e6f72eae688d43/150/150/Image/Png" alt="+1 Additional Car"><h3>+1 Additional Car</h3><p>99 Robux / Rp13.860</p></div>
-      <div class="card"><img src="https://tr.rbxcdn.com/eaf1e9460e3e35e36f8efbe2e12b7cf4/150/150/Image/Png" alt="+2 Additional Cars"><h3>+2 Additional Cars</h3><p>269 Robux / Rp37.660</p></div>
-      <div class="card"><img src="https://tr.rbxcdn.com/6e6e859f988ded25c785dbf1bb04f1f0/150/150/Image/Png" alt="Double Paycheck"><h3>Double Paycheck</h3><p>399 Robux / Rp55.860</p></div>
-      <div class="card"><img src="https://tr.rbxcdn.com/6d85d4f2cf308f3c1058fc64e7296c1d/150/150/Image/Png" alt="50% More Income"><h3>50% More Job Income</h3><p>399 Robux / Rp55.860</p></div>
-      <div class="card"><img src="https://tr.rbxcdn.com/aaa27ab1f295bcf17a579a0e84a08b0c/150/150/Image/Png" alt="Luxury House Slot"><h3>Luxury House Slot</h3><p>79 Robux / Rp11.060</p></div>
-      <div class="card"><img src="https://tr.rbxcdn.com/f1b4df06696f1540f3d6f96a9ab4a502/150/150/Image/Png" alt="Advanced Tuning"><h3>Advanced Tuning</h3><p>199 Robux / Rp27.860</p></div>
-    </div>
-    <div class="form-container">
-      <h2>Formulir Pemesanan</h2>
-      <form action="https://wa.me/6285183283404" target="_blank">
-        <input type="text" placeholder="Nama Anda" required>
-        <input type="text" placeholder="Username Roblox" required>
-        <select required>
-          <option value="">-- Pilih Gamepass --</option>
-          <option value="Luxury Car">Luxury Car - Rp36.260</option>
-          <option value="Emergency Vehicle">Emergency Vehicle - Rp19.460</option>
-          <option value="Retro Car">Retro Car - Rp23.660</option>
-          <option value="Rare Imports">Rare Imports - Rp26.460</option>
-          <option value="+1 Additional Car">+1 Additional Car - Rp13.860</option>
-          <option value="+2 Additional Cars">+2 Additional Cars - Rp37.660</option>
-          <option value="Double Paycheck">Double Paycheck - Rp55.860</option>
-          <option value="50% More Job Income">50% More Job Income - Rp55.860</option>
-          <option value="Luxury House Slot">Luxury House Slot - Rp11.060</option>
-          <option value="Advanced Tuning">Advanced Tuning - Rp27.860</option>
-        </select>
-        <textarea placeholder="Catatan (opsional)"></textarea>
-        <button type="submit">Pesan via WhatsApp</button>
-      </form>
-    </div>
+    <form onsubmit="kirimPesanWhatsApp(event)">
+      <div id="harga-preview">Harga: -</div>
+      <div id="total-harga"></div>
+      <div id="loading">Mengirim pesan ke WhatsApp...</div>
+      <input type="text" id="nama" placeholder="Nama Anda" required />
+      <input type="text" id="username" placeholder="Username Roblox" required />
+      <input type="text" id="whatsapp" placeholder="Nomor WhatsApp Aktif" required />
+      <select id="gamepass" required>
+        <option value="" disabled selected>Pilih Gamepass</option>
+        <option value="Luxury Car - 36260">Luxury Car - Rp36.260</option>
+        <option value="Emergency Vehicle - 19460">Emergency Vehicle - Rp19.460</option>
+        <option value="Retro Car - 23660">Retro Car - Rp23.660</option>
+        <option value="Rare Imports - 26460">Rare Imports - Rp26.460</option>
+        <option value="+1 Additional Car - 13860">+1 Additional Car - Rp13.860</option>
+        <option value="+2 Additional Cars - 37660">+2 Additional Cars - Rp37.660</option>
+        <option value="Double Paycheck - 55860">Double Paycheck - Rp55.860</option>
+        <option value="50% More Job Income - 55860">50% More Job Income - Rp55.860</option>
+        <option value="Luxury House Slot - 11060">Luxury House Slot - Rp11.060</option>
+        <option value="Advanced Tuning - 27860">Advanced Tuning - Rp27.860</option>
+      </select>
+      <select id="pembayaran" required>
+        <option value="" disabled selected>Pilih Metode Pembayaran</option>
+        <option value="QRIS">QRIS</option>
+        <option value="GoPay">GoPay</option>
+        <option value="Bank Mandiri">Bank Mandiri</option>
+        <option value="OVO">OVO</option>
+        <option value="DANA">DANA</option>
+      </select>
+      <textarea id="catatan" rows="3" placeholder="Catatan tambahan (opsional)"></textarea>
+      <button type="submit">Pesan via WhatsApp</button>
+    </form>
   </div>
-  <footer>
-    &copy; 2025 UrbanDriveStore. All rights reserved.
-  </footer>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const gamepassSelect = document.getElementById('gamepass');
+      const hargaPreview = document.getElementById('harga-preview');
+      const totalHarga = document.getElementById('total-harga');
+
+      if (gamepassSelect) {
+        gamepassSelect.addEventListener('change', function () {
+          const selectedOption = gamepassSelect.options[gamepassSelect.selectedIndex];
+          const label = selectedOption.text;
+          const harga = parseInt(selectedOption.value.split(' - ')[1]);
+
+          hargaPreview.textContent = `Harga: ${label.split(' - ')[1]}`;
+          const total = harga + 1000;
+          totalHarga.textContent = `Total dengan biaya admin: Rp${total.toLocaleString('id-ID')}`;
+        });
+      }
+    });
+
+    function kirimPesanWhatsApp(event) {
+      event.preventDefault();
+      const username = document.getElementById('username').value.trim();
+      const usernameRegex = /^[a-zA-Z0-9_]{3,20}$/;
+      if (!usernameRegex.test(username)) {
+        alert('Username Roblox tidak valid. Gunakan hanya huruf, angka, atau garis bawah (3-20 karakter).');
+        return;
+      }
+      document.getElementById('loading').style.display = 'block';
+      const nama = document.getElementById('nama').value;
+      const gamepassText = document.getElementById('gamepass').options[document.getElementById('gamepass').selectedIndex].text;
+      const pembayaran = document.getElementById('pembayaran').value;
+      const whatsapp = document.getElementById('whatsapp').value;
+      const catatan = document.getElementById('catatan').value;
+      const totalText = document.getElementById('total-harga').textContent;
+      const pesan = `Halo! Saya ingin memesan gamepass *${gamepassText}*\nNama: ${nama}\nUsername Roblox: ${username}\nMetode Pembayaran: ${pembayaran}\n${totalText}\nNomor WhatsApp: ${whatsapp}
+Catatan: ${catatan}`;
+      const url = `https://wa.me/6285183283404?text=${encodeURIComponent(pesan)}`;
+      window.open(url, '_blank');
+
+      // Konfirmasi otomatis
+      setTimeout(() => {
+        alert('Pesanan Anda telah dikirim ke WhatsApp. Silakan tunggu balasan dari admin.');
+        document.getElementById('loading').style.display = 'none';
+      }, 1500);
+    }
+  </script>
 </body>
 </html>
