@@ -68,6 +68,10 @@
       font-size: 16px;
       cursor: pointer;
     }
+    .reset-button {
+      background-color: #333;
+      margin-top: 10px;
+    }
     #harga-preview,
     #total-harga {
       text-align: center;
@@ -80,6 +84,20 @@
       margin-bottom: 15px;
       color: #ffcc00;
     }
+    .payment-icons {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+    .payment-icons img {
+      height: 30px;
+    }
+    @media screen and (max-width: 600px) {
+      .section {
+        padding: 20px;
+      }
+    }
   </style>
 </head>
 <body>
@@ -89,7 +107,14 @@
 
   <div class="wrapper">
     <div class="section">
-      <form onsubmit="kirimPesanWhatsApp(event)">
+      <form id="orderForm" onsubmit="kirimPesanWhatsApp(event)">
+        <div class="payment-icons">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/8/8e/Qris_logo.svg" alt="QRIS">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/3b/Logo_dana_blue.svg/1024px-Logo_dana_blue.svg.png" alt="DANA">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/f/f1/Logo_OVO_purple.svg" alt="OVO">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/0c/Gopay_logo.svg/1024px-Gopay_logo.svg.png" alt="GoPay">
+        </div>
+
         <div id="harga-preview">Harga: -</div>
         <div id="total-harga"></div>
         <div id="loading">Mengirim pesan ke WhatsApp...</div>
@@ -120,16 +145,28 @@
         </select>
         <textarea id="catatan" rows="3" placeholder="Catatan tambahan (opsional)"></textarea>
         <button type="submit">Pesan via WhatsApp</button>
+        <button type="button" class="reset-button" onclick="document.getElementById('orderForm').reset(); resetHarga();">Reset Form</button>
       </form>
     </div>
   </div>
 
   <script>
+    function resetHarga() {
+      document.getElementById('harga-preview').textContent = 'Harga: -';
+      document.getElementById('total-harga').textContent = '';
+    }
+
     document.addEventListener('DOMContentLoaded', () => {
       const gamepassSelect = document.getElementById('gamepass');
       const pembayaranSelect = document.getElementById('pembayaran');
       const hargaPreview = document.getElementById('harga-preview');
       const totalHarga = document.getElementById('total-harga');
+
+      // Load dari localStorage jika ada
+      const savedUsername = localStorage.getItem('username');
+      const savedWhatsapp = localStorage.getItem('whatsapp');
+      if (savedUsername) document.getElementById('username').value = savedUsername;
+      if (savedWhatsapp) document.getElementById('whatsapp').value = savedWhatsapp;
 
       function updateHarga() {
         const selectedGamepass = gamepassSelect.options[gamepassSelect.selectedIndex];
@@ -137,7 +174,7 @@
         const harga = parseInt(selectedGamepass.value.split(' - ')[1]);
 
         const pembayaran = pembayaranSelect.value;
-        let biayaAdmin = 1000; // default murah
+        let biayaAdmin = 1000;
 
         if (pembayaran === 'Bank BRI' || pembayaran === 'Bank BNI') {
           biayaAdmin = 4000;
@@ -160,6 +197,10 @@
       event.preventDefault();
       const username = document.getElementById('username').value.trim();
       const whatsapp = document.getElementById('whatsapp').value.trim();
+
+      localStorage.setItem('username', username);
+      localStorage.setItem('whatsapp', whatsapp);
+
       const waRegex = /^08\d{8,13}$/;
       if (!waRegex.test(whatsapp)) {
         alert('Nomor WhatsApp tidak valid. Harus dimulai dengan 08 dan berisi 10–15 digit.');
