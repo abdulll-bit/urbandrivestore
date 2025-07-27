@@ -19,12 +19,6 @@
       box-shadow: 0 2px 10px rgba(0,0,0,0.5);
       position: relative;
     }
-    header img.logo {
-      position: absolute;
-      top: 20px;
-      left: 20px;
-      width: 50px;
-    }
     header h1 {
       margin: 0;
       font-size: 36px;
@@ -77,7 +71,6 @@
 </head>
 <body>
   <header>
-    <img src="logo.png" alt="Logo" class="logo">
     <h1>UrbanDriveStore</h1>
   </header>
 
@@ -86,7 +79,6 @@
       <div id="harga-preview">Harga: -</div>
       <div id="total-harga"></div>
       <div id="loading">Mengirim pesan ke WhatsApp...</div>
-      <input type="text" id="nama" placeholder="Nama Anda" required />
       <input type="text" id="username" placeholder="Username Roblox" required />
       <input type="text" id="whatsapp" placeholder="Nomor WhatsApp Aktif" required />
       <select id="gamepass" required>
@@ -112,7 +104,6 @@
       </select>
       <textarea id="catatan" rows="3" placeholder="Catatan tambahan (opsional)"></textarea>
       <button type="submit">Pesan via WhatsApp</button>
-      <div id="user-info" style="text-align:center; margin-top: 20px; font-size: 14px;"><div id="username-loading" style="display: none;">⏳ Sedang memeriksa username...</div></div>
     </form>
   </div>
 
@@ -133,58 +124,11 @@
           totalHarga.textContent = `Total dengan biaya admin: Rp${total.toLocaleString('id-ID')}`;
         });
       }
-
-      const usernameInput = document.getElementById('username');
-      const userInfoDiv = document.getElementById('user-info');
-
-      usernameInput.addEventListener('blur', () => {
-        const username = usernameInput.value.trim();
-        if (!username) return;
-
-        document.getElementById('username-loading').style.display = 'block';
-        userInfoDiv.innerHTML = '';
-        window.usernameValid = false;
-
-        fetch('https://users.roblox.com/v1/usernames/users', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify({ usernames: [username] })
-        })
-        .then(response => response.json())
-        .then(data => {
-          document.getElementById('username-loading').style.display = 'none';
-          if (data && data.data && data.data.length > 0) {
-            const user = data.data[0];
-            const avatarUrl = `https://www.roblox.com/headshot-thumbnail/image?userId=${user.id}&width=100&height=100&format=png`;
-            userInfoDiv.innerHTML = `✅ Username ditemukan: <strong>${user.username}</strong><br><img src="${avatarUrl}" alt="Avatar Roblox" style="margin-top:10px;border-radius:12px;">`;
-            window.usernameValid = true;
-          } else {
-            userInfoDiv.innerHTML = '❌ Username tidak ditemukan.';
-            window.usernameValid = false;
-          }
-        })
-        .catch(error => {
-          userInfoDiv.innerHTML = '⚠️ Terjadi kesalahan saat memeriksa username.';
-          document.getElementById('username-loading').style.display = 'none';
-          window.usernameValid = false;
-        });
-      });
     });
 
     function kirimPesanWhatsApp(event) {
-      if (window.usernameValid === false) {
-        alert('Username Roblox tidak valid atau belum ditemukan. Mohon periksa kembali.');
-        return;
-      }
       event.preventDefault();
       const username = document.getElementById('username').value.trim();
-      const usernameRegex = /^[a-zA-Z0-9_]{3,20}$/;
-      if (!usernameRegex.test(username)) {
-        alert('Username Roblox tidak valid. Gunakan hanya huruf, angka, atau garis bawah (3-20 karakter).');
-        return;
-      }
       const whatsapp = document.getElementById('whatsapp').value.trim();
       const waRegex = /^08\d{8,13}$/;
       if (!waRegex.test(whatsapp)) {
@@ -192,12 +136,11 @@
         return;
       }
       document.getElementById('loading').style.display = 'block';
-      const nama = document.getElementById('nama').value;
       const gamepassText = document.getElementById('gamepass').options[document.getElementById('gamepass').selectedIndex].text;
       const pembayaran = document.getElementById('pembayaran').value;
       const catatan = document.getElementById('catatan').value;
       const totalText = document.getElementById('total-harga').textContent;
-      const pesan = `Halo! Saya ingin memesan gamepass *${gamepassText}*\nNama: ${nama}\nUsername Roblox: ${username}\nMetode Pembayaran: ${pembayaran}\n${totalText}\nNomor WhatsApp: ${whatsapp}\nCatatan: ${catatan}`;
+      const pesan = `Halo! Saya ingin memesan gamepass *${gamepassText}*\nUsername Roblox: ${username}\nMetode Pembayaran: ${pembayaran}\n${totalText}\nNomor WhatsApp: ${whatsapp}\nCatatan: ${catatan}`;
       const url = `https://wa.me/6285183283404?text=${encodeURIComponent(pesan)}`;
       window.open(url, '_blank');
 
