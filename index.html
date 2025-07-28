@@ -3,7 +3,10 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>UrbanDriveStore - Pesan Gamepass CDID</title>
+  <meta name="description" content="UrbanDriveStore - Pemesanan Gamepass CDID cepat, aman, dan terpercaya. Dukung metode QRIS, Dana, OVO, Gopay, Mandiri, BRI.">
+  <meta name="keywords" content="gamepass CDID, beli robux, roblox indonesia, gamepass murah, urban drive store">
   <link href="https://fonts.googleapis.com/css2?family=Fredoka&display=swap" rel="stylesheet">
+  <link rel="icon" href="https://cdn-icons-png.flaticon.com/512/5968/5968885.png" type="image/png">
   <style>
     html, body {
       height: 100%;
@@ -26,7 +29,6 @@
       margin: 0;
       font-size: 36px;
       color: #ffcc00;
-      font-family: 'Fredoka', sans-serif;
     }
     .wrapper {
       flex: 1;
@@ -35,7 +37,6 @@
       justify-content: center;
       width: 100%;
       padding: 20px;
-      box-sizing: border-box;
     }
     .section {
       max-width: 600px;
@@ -44,7 +45,6 @@
       border-radius: 16px;
       padding: 30px;
       box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
-      margin: 0 auto;
       box-sizing: border-box;
     }
     form input,
@@ -58,7 +58,6 @@
       background: #2c2c2c;
       color: #fff;
       font-size: 15px;
-      box-sizing: border-box;
     }
     button {
       width: 100%;
@@ -70,7 +69,6 @@
       border-radius: 10px;
       font-size: 16px;
       cursor: pointer;
-      box-sizing: border-box;
     }
     .reset-button {
       background-color: #333;
@@ -92,11 +90,26 @@
       display: flex;
       justify-content: center;
       gap: 10px;
-      margin-bottom: 20px;
       flex-wrap: wrap;
+      margin-bottom: 20px;
     }
     .payment-icons img {
       height: 30px;
+    }
+    .wa-floating {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      z-index: 999;
+    }
+    .wa-floating img {
+      width: 50px;
+    }
+    .total-counter {
+      text-align: center;
+      margin-top: 10px;
+      font-size: 14px;
+      color: #aaa;
     }
     @media screen and (max-width: 600px) {
       .section {
@@ -120,6 +133,7 @@
           <img src="https://images.seeklogo.com/logo-png/45/1/bank-bri-logo-png_seeklogo-459990.png" alt="Bank BRI">
         </div><div id="harga-preview">Harga: -</div>
     <div id="total-harga"></div>
+    <div class="total-counter" id="counter"></div>
     <div id="loading">Mengirim pesan ke WhatsApp...</div>
     <input type="text" id="username" placeholder="Username Roblox" required />
     <input type="text" id="whatsapp" placeholder="Nomor WhatsApp Aktif" required />
@@ -152,7 +166,12 @@
   </form>
 </div>
 
-  </div>  <script>
+  </div>  <a href="https://wa.me/6285183283404" class="wa-floating" target="_blank">
+    <img src="https://cdn-icons-png.flaticon.com/512/124/124034.png" alt="WhatsApp">
+  </a>  <script>
+    let counter = parseInt(localStorage.getItem('orderCount') || '0');
+    document.getElementById('counter').textContent = `Total pesanan tersimpan: ${counter}`;
+
     function resetHarga() {
       document.getElementById('harga-preview').textContent = 'Harga: -';
       document.getElementById('total-harga').textContent = '';
@@ -173,15 +192,11 @@
         const selectedGamepass = gamepassSelect.options[gamepassSelect.selectedIndex];
         const label = selectedGamepass.text;
         const harga = parseInt(selectedGamepass.value.split(' - ')[1]);
-
         const pembayaran = pembayaranSelect.value;
         let biayaAdmin = 1000;
 
-        if (pembayaran === 'Bank BRI' || pembayaran === 'Bank BNI') {
-          biayaAdmin = 4000;
-        } else if (pembayaran.startsWith('Bank')) {
-          biayaAdmin = 6500;
-        }
+        if (pembayaran === 'Bank BRI' || pembayaran === 'Bank BNI') biayaAdmin = 4000;
+        else if (pembayaran.startsWith('Bank')) biayaAdmin = 6500;
 
         hargaPreview.textContent = `Harga: ${label.split(' - ')[1]}`;
         const total = harga + biayaAdmin;
@@ -215,6 +230,10 @@
       const pesan = `Halo! Saya ingin memesan gamepass *${gamepassText}*\nUsername Roblox: ${username}\nMetode Pembayaran: ${pembayaran}\n${totalText}\nNomor WhatsApp: ${whatsapp}\nCatatan: ${catatan}`;
       const url = `https://wa.me/6285183283404?text=${encodeURIComponent(pesan)}`;
       window.open(url, '_blank');
+
+      counter++;
+      localStorage.setItem('orderCount', counter);
+      document.getElementById('counter').textContent = `Total pesanan tersimpan: ${counter}`;
 
       setTimeout(() => {
         alert('Pesanan Anda telah dikirim ke WhatsApp. Silakan tunggu balasan dari admin.');
