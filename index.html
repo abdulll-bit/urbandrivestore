@@ -3,7 +3,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>UrbanDriveStore - Pesan Gamepass CDID</title>
-  <link href="https://fonts.googleapis.com/css2?family=Orbitron&family=Fredoka&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka&display=swap" rel="stylesheet">
   <style>
     html, body {
       height: 100%;
@@ -14,6 +14,7 @@
       display: flex;
       flex-direction: column;
       align-items: center;
+      justify-content: center;
     }
     header {
       width: 100%;
@@ -26,12 +27,10 @@
       margin: 0;
       font-size: 36px;
       color: #ffcc00;
-      font-family: 'Orbitron', sans-serif;
+      font-family: 'Fredoka', sans-serif;
     }
     .wrapper {
-      flex: 1;
       display: flex;
-      align-items: center;
       justify-content: center;
       width: 100%;
       padding: 20px;
@@ -39,11 +38,11 @@
     .section {
       width: 100%;
       max-width: 600px;
-      margin: 0 auto;
       background: #1f1f1f;
       border-radius: 16px;
       padding: 30px;
       box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+      margin: 0 auto;
     }
     form input,
     form select,
@@ -86,8 +85,8 @@
     }
     .payment-icons {
       display: flex;
-      justify-content: center;
       flex-wrap: wrap;
+      justify-content: center;
       gap: 10px;
       margin-bottom: 20px;
     }
@@ -160,7 +159,6 @@
       const hargaPreview = document.getElementById('harga-preview');
       const totalHarga = document.getElementById('total-harga');
 
-      // Load dari localStorage jika ada
       const savedUsername = localStorage.getItem('username');
       const savedWhatsapp = localStorage.getItem('whatsapp');
       if (savedUsername) document.getElementById('username').value = savedUsername;
@@ -204,11 +202,13 @@
         alert('Nomor WhatsApp tidak valid. Harus dimulai dengan 08 dan berisi 10–15 digit.');
         return;
       }
+
       document.getElementById('loading').style.display = 'block';
       const gamepassText = document.getElementById('gamepass').options[document.getElementById('gamepass').selectedIndex].text;
       const pembayaran = document.getElementById('pembayaran').value;
       const catatan = document.getElementById('catatan').value;
       const totalText = document.getElementById('total-harga').textContent;
+
       const pesan = `Halo! Saya ingin memesan gamepass *${gamepassText}*\nUsername Roblox: ${username}\nMetode Pembayaran: ${pembayaran}\n${totalText}\nNomor WhatsApp: ${whatsapp}\nCatatan: ${catatan}`;
       const url = `https://wa.me/6285183283404?text=${encodeURIComponent(pesan)}`;
       window.open(url, '_blank');
