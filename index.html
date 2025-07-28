@@ -3,14 +3,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>UrbanDriveStore - Pesan Gamepass CDID</title>
-  <meta name="description" content="UrbanDriveStore - Pemesanan Gamepass CDID cepat, aman, dan terpercaya. Dukung metode QRIS, Dana, OVO, Gopay, Mandiri, BRI.">
-  <meta name="keywords" content="gamepass CDID, beli robux, roblox indonesia, gamepass murah, urban drive store">
-  <link href="https://fonts.googleapis.com/css2?family=Fredoka&display=swap" rel="stylesheet">
-  <link rel="icon" href="https://www.roblox.com/favicon.ico">
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron&family=Fredoka&display=swap" rel="stylesheet">
   <style>
-    * {
-      box-sizing: border-box;
-    }
     html, body {
       height: 100%;
       margin: 0;
@@ -32,23 +26,25 @@
       margin: 0;
       font-size: 36px;
       color: #ffcc00;
+      font-family: 'Orbitron', sans-serif;
     }
     .wrapper {
       flex: 1;
-      width: 100%;
       display: flex;
-      justify-content: center;
       align-items: center;
+      justify-content: center;
+      width: 100%;
       padding: 20px;
+      box-sizing: border-box;
     }
     .section {
-      width: 100%;
       max-width: 600px;
+      width: 100%;
       background: #1f1f1f;
       border-radius: 16px;
       padding: 30px;
       box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
-      margin: 0 auto;
+      margin: auto;
     }
     form input,
     form select,
@@ -92,12 +88,46 @@
     .payment-icons {
       display: flex;
       justify-content: center;
+      flex-wrap: wrap;
       gap: 10px;
       margin-bottom: 20px;
-      flex-wrap: wrap;
     }
     .payment-icons img {
       height: 30px;
+    }
+    #summaryModal {
+      display: none;
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background-color: rgba(0,0,0,0.8);
+      z-index: 9999;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    #summaryModalContent {
+      background: #1f1f1f;
+      padding: 30px;
+      border-radius: 16px;
+      text-align: left;
+      max-width: 400px;
+      width: 90%;
+    }
+    #summaryModalContent h3 {
+      margin-top: 0;
+      color: #ffcc00;
+    }
+    #summaryModalContent p {
+      margin: 8px 0;
+    }
+    .summary-buttons {
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      margin-top: 20px;
+    }
+    .summary-buttons button {
+      flex: 1;
     }
     @media screen and (max-width: 600px) {
       .section {
@@ -111,7 +141,7 @@
     <h1>UrbanDriveStore</h1>
   </header>  <div class="wrapper">
     <div class="section">
-      <form id="orderForm" onsubmit="kirimPesanWhatsApp(event)">
+      <form id="orderForm" onsubmit="tampilkanRingkasan(event)">
         <div class="payment-icons">
           <img src="https://images.seeklogo.com/logo-png/39/1/quick-response-code-indonesia-standard-qris-logo-png_seeklogo-391791.png" alt="QRIS">
           <img src="https://iconlogovector.com/uploads/images/2024/11/lg-673fa21a3ad2c-DANA.webp" alt="DANA">
@@ -153,6 +183,18 @@
   </form>
 </div>
 
+  </div>  <div id="summaryModal">
+    <div id="summaryModalContent">
+      <h3>Konfirmasi Pesanan</h3>
+      <p id="ringkasan-username"></p>
+      <p id="ringkasan-gamepass"></p>
+      <p id="ringkasan-pembayaran"></p>
+      <p id="ringkasan-total"></p>
+      <div class="summary-buttons">
+        <button onclick="konfirmasiPesanWhatsApp()">Konfirmasi</button>
+        <button onclick="document.getElementById('summaryModal').style.display='none'">Batal</button>
+      </div>
+    </div>
   </div>  <script>
     function resetHarga() {
       document.getElementById('harga-preview').textContent = 'Harga: -';
@@ -188,17 +230,19 @@
         totalHarga.textContent = `Total dengan biaya admin: Rp${total.toLocaleString('id-ID')} (termasuk biaya admin Rp${biayaAdmin.toLocaleString('id-ID')})`;
       }
 
-      gamepassSelect.addEventListener('change', updateHarga);
-      pembayaranSelect.addEventListener('change', updateHarga);
+      if (gamepassSelect && pembayaranSelect) {
+        gamepassSelect.addEventListener('change', updateHarga);
+        pembayaranSelect.addEventListener('change', updateHarga);
+      }
     });
 
-    function kirimPesanWhatsApp(event) {
+    function tampilkanRingkasan(event) {
       event.preventDefault();
       const username = document.getElementById('username').value.trim();
       const whatsapp = document.getElementById('whatsapp').value.trim();
-
-      localStorage.setItem('username', username);
-      localStorage.setItem('whatsapp', whatsapp);
+      const gamepassText = document.getElementById('gamepass').options[document.getElementById('gamepass').selectedIndex].text;
+      const pembayaran = document.getElementById('pembayaran').value;
+      const totalText = document.getElementById('total-harga').textContent;
 
       const waRegex = /^08\d{8,13}$/;
       if (!waRegex.test(whatsapp)) {
@@ -206,15 +250,31 @@
         return;
       }
 
-      document.getElementById('loading').style.display = 'block';
+      localStorage.setItem('username', username);
+      localStorage.setItem('whatsapp', whatsapp);
+
+      document.getElementById('ringkasan-username').textContent = `Username Roblox: ${username}`;
+      document.getElementById('ringkasan-gamepass').textContent = `Gamepass: ${gamepassText}`;
+      document.getElementById('ringkasan-pembayaran').textContent = `Metode Pembayaran: ${pembayaran}`;
+      document.getElementById('ringkasan-total').textContent = totalText;
+
+      document.getElementById('summaryModal').style.display = 'flex';
+    }
+
+    function konfirmasiPesanWhatsApp() {
+      document.getElementById('summaryModal').style.display = 'none';
+      const username = document.getElementById('username').value.trim();
+      const whatsapp = document.getElementById('whatsapp').value.trim();
       const gamepassText = document.getElementById('gamepass').options[document.getElementById('gamepass').selectedIndex].text;
       const pembayaran = document.getElementById('pembayaran').value;
       const catatan = document.getElementById('catatan').value;
       const totalText = document.getElementById('total-harga').textContent;
+
       const pesan = `Halo! Saya ingin memesan gamepass *${gamepassText}*\nUsername Roblox: ${username}\nMetode Pembayaran: ${pembayaran}\n${totalText}\nNomor WhatsApp: ${whatsapp}\nCatatan: ${catatan}`;
       const url = `https://wa.me/6285183283404?text=${encodeURIComponent(pesan)}`;
       window.open(url, '_blank');
 
+      document.getElementById('loading').style.display = 'block';
       setTimeout(() => {
         alert('Pesanan Anda telah dikirim ke WhatsApp. Silakan tunggu balasan dari admin.');
         document.getElementById('loading').style.display = 'none';
