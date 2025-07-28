@@ -35,6 +35,7 @@
       justify-content: center;
       width: 100%;
       padding: 20px;
+      box-sizing: border-box;
     }
     .section {
       max-width: 600px;
@@ -43,6 +44,8 @@
       border-radius: 16px;
       padding: 30px;
       box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+      margin: 0 auto;
+      box-sizing: border-box;
     }
     form input,
     form select,
@@ -55,6 +58,7 @@
       background: #2c2c2c;
       color: #fff;
       font-size: 15px;
+      box-sizing: border-box;
     }
     button {
       width: 100%;
@@ -66,6 +70,7 @@
       border-radius: 10px;
       font-size: 16px;
       cursor: pointer;
+      box-sizing: border-box;
     }
     .reset-button {
       background-color: #333;
@@ -107,13 +112,13 @@
     <div class="section">
       <form id="orderForm" onsubmit="kirimPesanWhatsApp(event)">
         <div class="payment-icons">
-  <img src="https://images.seeklogo.com/logo-png/39/1/quick-response-code-indonesia-standard-qris-logo-png_seeklogo-391791.png" alt="QRIS">
-  <img src="https://iconlogovector.com/uploads/images/2024/11/lg-673fa21a3ad2c-DANA.webp" alt="DANA">
-  <img src="https://toppng.com/uploads/preview/ovo-logo-ovo-indonesia-115628872397l92yfi1q4.png" alt="OVO">
-  <img src="https://downloadr2.apkmirror.com/wp-content/uploads/2024/10/50/670c8db32acb9_com.gojek.gopay.png" alt="GoPay">
-  <img src="https://images.seeklogo.com/logo-png/42/2/bank-mandiri-logo-png_seeklogo-429063.png" alt="Bank Mandiri">
-  <img src="https://images.seeklogo.com/logo-png/45/1/bank-bri-logo-png_seeklogo-459990.png" alt="Bank BRI">
-</div><div id="harga-preview">Harga: -</div>
+          <img src="https://images.seeklogo.com/logo-png/39/1/quick-response-code-indonesia-standard-qris-logo-png_seeklogo-391791.png" alt="QRIS">
+          <img src="https://iconlogovector.com/uploads/images/2024/11/lg-673fa21a3ad2c-DANA.webp" alt="DANA">
+          <img src="https://toppng.com/uploads/preview/ovo-logo-ovo-indonesia-115628872397l92yfi1q4.png" alt="OVO">
+          <img src="https://downloadr2.apkmirror.com/wp-content/uploads/2024/10/50/670c8db32acb9_com.gojek.gopay.png" alt="GoPay">
+          <img src="https://images.seeklogo.com/logo-png/42/2/bank-mandiri-logo-png_seeklogo-429063.png" alt="Bank Mandiri">
+          <img src="https://images.seeklogo.com/logo-png/45/1/bank-bri-logo-png_seeklogo-459990.png" alt="Bank BRI">
+        </div><div id="harga-preview">Harga: -</div>
     <div id="total-harga"></div>
     <div id="loading">Mengirim pesan ke WhatsApp...</div>
     <input type="text" id="username" placeholder="Username Roblox" required />
