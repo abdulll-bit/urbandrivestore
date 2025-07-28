@@ -1,15 +1,14 @@
-<!DOCTYPE html>
-<html lang="id">
+<!DOCTYPE html><html lang="id">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>UrbanDriveStore - Pesan Gamepass CDID</title>
-  <link href="https://fonts.googleapis.com/css2?family=Orbitron&family=Poppins&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka&display=swap" rel="stylesheet">
   <style>
     html, body {
       height: 100%;
       margin: 0;
-      font-family: 'Poppins', sans-serif;
+      font-family: 'Fredoka', sans-serif;
       background-color: #0e0e0e;
       color: #fff;
       display: flex;
@@ -27,7 +26,7 @@
       margin: 0;
       font-size: 36px;
       color: #ffcc00;
-      font-family: 'Orbitron', sans-serif;
+      font-family: 'Fredoka', sans-serif;
     }
     .wrapper {
       flex: 1;
@@ -44,7 +43,6 @@
       border-radius: 16px;
       padding: 30px;
       box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
-      box-sizing: border-box;
     }
     form input,
     form select,
@@ -57,7 +55,6 @@
       background: #2c2c2c;
       color: #fff;
       font-size: 15px;
-      box-sizing: border-box;
     }
     button {
       width: 100%;
@@ -99,7 +96,6 @@
     @media screen and (max-width: 600px) {
       .section {
         padding: 20px;
-        margin: 0 10px;
       }
     }
   </style>
@@ -107,56 +103,51 @@
 <body>
   <header>
     <h1>UrbanDriveStore</h1>
-  </header>
-
-  <div class="wrapper">
+  </header>  <div class="wrapper">
     <div class="section">
       <form id="orderForm" onsubmit="kirimPesanWhatsApp(event)">
         <div class="payment-icons">
-          <img src="https://images.seeklogo.com/logo-png/39/1/quick-response-code-indonesia-standard-qris-logo-png_seeklogo-391791.png" alt="QRIS">
-          <img src="https://iconlogovector.com/uploads/images/2024/11/lg-673fa21a3ad2c-DANA.webp" alt="DANA">
-          <img src="https://toppng.com/uploads/preview/ovo-logo-ovo-indonesia-115628872397l92yfi1q4.png" alt="OVO">
-          <img src="https://downloadr2.apkmirror.com/wp-content/uploads/2024/10/50/670c8db32acb9_com.gojek.gopay.png" alt="GoPay">
-          <img src="https://images.seeklogo.com/logo-png/42/2/bank-mandiri-logo-png_seeklogo-429063.png" alt="Bank Mandiri">
-          <img src="https://images.seeklogo.com/logo-png/45/1/bank-bri-logo-png_seeklogo-459990.png" alt="Bank BRI">
-        </div>
+  <img src="https://images.seeklogo.com/logo-png/39/1/quick-response-code-indonesia-standard-qris-logo-png_seeklogo-391791.png" alt="QRIS">
+  <img src="https://iconlogovector.com/uploads/images/2024/11/lg-673fa21a3ad2c-DANA.webp" alt="DANA">
+  <img src="https://toppng.com/uploads/preview/ovo-logo-ovo-indonesia-115628872397l92yfi1q4.png" alt="OVO">
+  <img src="https://downloadr2.apkmirror.com/wp-content/uploads/2024/10/50/670c8db32acb9_com.gojek.gopay.png" alt="GoPay">
+  <img src="https://images.seeklogo.com/logo-png/42/2/bank-mandiri-logo-png_seeklogo-429063.png" alt="Bank Mandiri">
+  <img src="https://images.seeklogo.com/logo-png/45/1/bank-bri-logo-png_seeklogo-459990.png" alt="Bank BRI">
+</div><div id="harga-preview">Harga: -</div>
+    <div id="total-harga"></div>
+    <div id="loading">Mengirim pesan ke WhatsApp...</div>
+    <input type="text" id="username" placeholder="Username Roblox" required />
+    <input type="text" id="whatsapp" placeholder="Nomor WhatsApp Aktif" required />
+    <select id="gamepass" required>
+      <option value="" disabled selected>Pilih Gamepass</option>
+      <option value="Luxury Car - 36260">Luxury Car - Rp36.260</option>
+      <option value="Emergency Vehicle - 19460">Emergency Vehicle - Rp19.460</option>
+      <option value="Retro Car - 23660">Retro Car - Rp23.660</option>
+      <option value="Rare Imports - 26460">Rare Imports - Rp26.460</option>
+      <option value="+1 Additional Car - 13860">+1 Additional Car - Rp13.860</option>
+      <option value="+2 Additional Cars - 37660">+2 Additional Cars - Rp37.660</option>
+      <option value="Double Paycheck - 55860">Double Paycheck - Rp55.860</option>
+      <option value="50% More Job Income - 55860">50% More Job Income - Rp55.860</option>
+      <option value="Luxury House Slot - 11060">Luxury House Slot - Rp11.060</option>
+      <option value="Advanced Tuning - 27860">Advanced Tuning - Rp27.860</option>
+    </select>
+    <select id="pembayaran" required>
+      <option value="" disabled selected>Pilih Metode Pembayaran</option>
+      <option value="QRIS">QRIS</option>
+      <option value="GoPay">GoPay</option>
+      <option value="Bank Mandiri">Bank Mandiri</option>
+      <option value="Bank BRI">Bank BRI</option>
+      <option value="Bank BNI">Bank BNI</option>
+      <option value="OVO">OVO</option>
+      <option value="DANA">DANA</option>
+    </select>
+    <textarea id="catatan" rows="3" placeholder="Catatan tambahan (opsional)"></textarea>
+    <button type="submit">Pesan via WhatsApp</button>
+    <button type="button" class="reset-button" onclick="document.getElementById('orderForm').reset(); resetHarga();">Reset Form</button>
+  </form>
+</div>
 
-        <div id="harga-preview">Harga: -</div>
-        <div id="total-harga"></div>
-        <div id="loading">Mengirim pesan ke WhatsApp...</div>
-        <input type="text" id="username" placeholder="Username Roblox" required />
-        <input type="text" id="whatsapp" placeholder="Nomor WhatsApp Aktif" required />
-        <select id="gamepass" required>
-          <option value="" disabled selected>Pilih Gamepass</option>
-          <option value="Luxury Car - 36260">Luxury Car - Rp36.260</option>
-          <option value="Emergency Vehicle - 19460">Emergency Vehicle - Rp19.460</option>
-          <option value="Retro Car - 23660">Retro Car - Rp23.660</option>
-          <option value="Rare Imports - 26460">Rare Imports - Rp26.460</option>
-          <option value="+1 Additional Car - 13860">+1 Additional Car - Rp13.860</option>
-          <option value="+2 Additional Cars - 37660">+2 Additional Cars - Rp37.660</option>
-          <option value="Double Paycheck - 55860">Double Paycheck - Rp55.860</option>
-          <option value="50% More Job Income - 55860">50% More Job Income - Rp55.860</option>
-          <option value="Luxury House Slot - 11060">Luxury House Slot - Rp11.060</option>
-          <option value="Advanced Tuning - 27860">Advanced Tuning - Rp27.860</option>
-        </select>
-        <select id="pembayaran" required>
-          <option value="" disabled selected>Pilih Metode Pembayaran</option>
-          <option value="QRIS">QRIS</option>
-          <option value="GoPay">GoPay</option>
-          <option value="Bank Mandiri">Bank Mandiri</option>
-          <option value="Bank BRI">Bank BRI</option>
-          <option value="Bank BNI">Bank BNI</option>
-          <option value="OVO">OVO</option>
-          <option value="DANA">DANA</option>
-        </select>
-        <textarea id="catatan" rows="3" placeholder="Catatan tambahan (opsional)"></textarea>
-        <button type="submit">Pesan via WhatsApp</button>
-        <button type="button" class="reset-button" onclick="document.getElementById('orderForm').reset(); resetHarga();">Reset Form</button>
-      </form>
-    </div>
-  </div>
-
-  <script>
+  </div>  <script>
     function resetHarga() {
       document.getElementById('harga-preview').textContent = 'Harga: -';
       document.getElementById('total-harga').textContent = '';
@@ -225,6 +216,5 @@
         document.getElementById('loading').style.display = 'none';
       }, 1500);
     }
-  </script>
-</body>
+  </script></body>
 </html>
