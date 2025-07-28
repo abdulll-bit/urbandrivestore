@@ -163,25 +163,25 @@
         <img src="https://images.seeklogo.com/logo-png/45/1/bank-bri-logo-png_seeklogo-459990.png" alt="Bank BRI">
       </div>
       <div id="harga-preview">Harga: -</div>
-      <div id="total-harga"></div>
+      <div id="total-harga">Total: -</div>
       <div id="loading">Mengirim pesan ke WhatsApp...</div>
-      <form>
-        <input type="text" placeholder="Username Roblox" required>
-        <input type="text" placeholder="Nomor WhatsApp Aktif" required>
-        <select required>
+      <form id="orderForm" onsubmit="kirimPesanWhatsApp(event)">
+        <input type="text" id="username" placeholder="Username Roblox" required>
+        <input type="text" id="whatsapp" placeholder="Nomor WhatsApp Aktif" required>
+        <select id="gamepass" required>
           <option disabled selected>Pilih Gamepass</option>
-          <option value="Luxury Car">Luxury Car - Rp36.260</option>
-          <option value="Emergency Vehicle">Emergency Vehicle - Rp19.460</option>
-          <option value="Retro Car">Retro Car - Rp23.660</option>
-          <option value="Rare Imports">Rare Imports - Rp26.460</option>
-          <option value="+1 Additional Car">+1 Additional Car - Rp13.860</option>
-          <option value="+2 Additional Cars">+2 Additional Cars - Rp37.660</option>
-          <option value="Double Paycheck">Double Paycheck - Rp55.860</option>
-          <option value="50% More Job Income">50% More Job Income - Rp55.860</option>
-          <option value="Luxury House Slot">Luxury House Slot - Rp11.060</option>
-          <option value="Advanced Tuning">Advanced Tuning - Rp27.860</option>
+          <option value="36260">Luxury Car - Rp36.260</option>
+          <option value="19460">Emergency Vehicle - Rp19.460</option>
+          <option value="23660">Retro Car - Rp23.660</option>
+          <option value="26460">Rare Imports - Rp26.460</option>
+          <option value="13860">+1 Additional Car - Rp13.860</option>
+          <option value="37660">+2 Additional Cars - Rp37.660</option>
+          <option value="55860">Double Paycheck - Rp55.860</option>
+          <option value="55860">50% More Job Income - Rp55.860</option>
+          <option value="11060">Luxury House Slot - Rp11.060</option>
+          <option value="27860">Advanced Tuning - Rp27.860</option>
         </select>
-        <select required>
+        <select id="pembayaran" required>
           <option disabled selected>Pilih Metode Pembayaran</option>
           <option value="QRIS">QRIS</option>
           <option value="GoPay">GoPay</option>
@@ -190,9 +190,9 @@
           <option value="OVO">OVO</option>
           <option value="DANA">DANA</option>
         </select>
-        <textarea rows="3" placeholder="Catatan tambahan (opsional)"></textarea>
+        <textarea id="catatan" rows="3" placeholder="Catatan tambahan (opsional)"></textarea>
         <button type="submit">Pesan via WhatsApp</button>
-        <button type="button" class="reset-button">Reset Form</button>
+        <button type="button" class="reset-button" onclick="document.getElementById('orderForm').reset(); document.getElementById('harga-preview').textContent = 'Harga: -'; document.getElementById('total-harga').textContent = 'Total: -';">Reset Form</button>
       </form>
     </div>
     <div class="testimonial">
@@ -203,5 +203,58 @@
   <footer>
     &copy; 2025 UrbanDriveStore. Semua Hak Dilindungi.
   </footer>
+
+  <script>
+    const gamepassSelect = document.getElementById('gamepass');
+    const pembayaranSelect = document.getElementById('pembayaran');
+    const hargaPreview = document.getElementById('harga-preview');
+    const totalHarga = document.getElementById('total-harga');
+
+    function updateHarga() {
+      const harga = parseInt(gamepassSelect.value);
+      let biayaAdmin = 1000;
+      const pembayaran = pembayaranSelect.value;
+      if (pembayaran === 'Bank BRI') biayaAdmin = 4000;
+      else if (pembayaran === 'Bank Mandiri') biayaAdmin = 6500;
+      const total = harga + biayaAdmin;
+      if (!isNaN(harga)) {
+        hargaPreview.textContent = `Harga: Rp${harga.toLocaleString('id-ID')}`;
+        totalHarga.textContent = `Total: Rp${total.toLocaleString('id-ID')} (termasuk biaya admin Rp${biayaAdmin.toLocaleString('id-ID')})`;
+      } else {
+        hargaPreview.textContent = 'Harga: -';
+        totalHarga.textContent = 'Total: -';
+      }
+    }
+
+    gamepassSelect.addEventListener('change', updateHarga);
+    pembayaranSelect.addEventListener('change', updateHarga);
+
+    function kirimPesanWhatsApp(event) {
+      event.preventDefault();
+      const username = document.getElementById('username').value.trim();
+      const whatsapp = document.getElementById('whatsapp').value.trim();
+      const harga = parseInt(gamepassSelect.value);
+      const pembayaran = pembayaranSelect.value;
+      const catatan = document.getElementById('catatan').value.trim();
+
+      let biayaAdmin = 1000;
+      if (pembayaran === 'Bank BRI') biayaAdmin = 4000;
+      else if (pembayaran === 'Bank Mandiri') biayaAdmin = 6500;
+
+      const total = harga + biayaAdmin;
+      const gamepassText = gamepassSelect.options[gamepassSelect.selectedIndex].text;
+      const pesan = `Halo! Saya ingin memesan gamepass *${gamepassText}*
+Username Roblox: ${username}
+Metode Pembayaran: ${pembayaran}
+Total: Rp${total.toLocaleString('id-ID')} (termasuk biaya admin Rp${biayaAdmin.toLocaleString('id-ID')})
+Nomor WhatsApp: ${whatsapp}
+Catatan: ${catatan}`;
+      const url = `https://wa.me/6285183283404?text=${encodeURIComponent(pesan)}`;
+
+      document.getElementById('loading').style.display = 'block';
+      window.open(url, '_blank');
+      setTimeout(() => document.getElementById('loading').style.display = 'none', 1500);
+    }
+  </script>
 </body>
 </html>
