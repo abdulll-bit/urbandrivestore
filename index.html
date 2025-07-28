@@ -3,7 +3,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>UrbanDriveStore - Pesan Gamepass CDID</title>
-  <link href="https://fonts.googleapis.com/css2?family=Fredoka&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron&family=Fredoka&display=swap" rel="stylesheet">
   <style>
     html, body {
       height: 100%;
@@ -13,8 +13,6 @@
       color: #fff;
       display: flex;
       flex-direction: column;
-      align-items: center;
-      justify-content: center;
     }
     header {
       width: 100%;
@@ -27,22 +25,26 @@
       margin: 0;
       font-size: 36px;
       color: #ffcc00;
-      font-family: 'Fredoka', sans-serif;
+      font-family: 'Orbitron', sans-serif;
     }
     .wrapper {
+      flex: 1;
       display: flex;
+      align-items: center;
       justify-content: center;
       width: 100%;
       padding: 20px;
+      box-sizing: border-box;
     }
     .section {
       width: 100%;
       max-width: 600px;
+      margin: auto;
       background: #1f1f1f;
       border-radius: 16px;
       padding: 30px;
       box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
-      margin: 0 auto;
+      box-sizing: border-box;
     }
     form input,
     form select,
@@ -55,6 +57,7 @@
       background: #2c2c2c;
       color: #fff;
       font-size: 15px;
+      box-sizing: border-box;
     }
     button {
       width: 100%;
@@ -171,22 +174,16 @@
 
         const pembayaran = pembayaranSelect.value;
         let biayaAdmin = 1000;
-
-        if (pembayaran === 'Bank BRI' || pembayaran === 'Bank BNI') {
-          biayaAdmin = 4000;
-        } else if (pembayaran.startsWith('Bank')) {
-          biayaAdmin = 6500;
-        }
+        if (pembayaran === 'Bank BRI' || pembayaran === 'Bank BNI') biayaAdmin = 4000;
+        else if (pembayaran.startsWith('Bank')) biayaAdmin = 6500;
 
         hargaPreview.textContent = `Harga: ${label.split(' - ')[1]}`;
         const total = harga + biayaAdmin;
         totalHarga.textContent = `Total dengan biaya admin: Rp${total.toLocaleString('id-ID')} (termasuk biaya admin Rp${biayaAdmin.toLocaleString('id-ID')})`;
       }
 
-      if (gamepassSelect && pembayaranSelect) {
-        gamepassSelect.addEventListener('change', updateHarga);
-        pembayaranSelect.addEventListener('change', updateHarga);
-      }
+      gamepassSelect.addEventListener('change', updateHarga);
+      pembayaranSelect.addEventListener('change', updateHarga);
     });
 
     function kirimPesanWhatsApp(event) {
@@ -204,6 +201,7 @@
       }
 
       document.getElementById('loading').style.display = 'block';
+
       const gamepassText = document.getElementById('gamepass').options[document.getElementById('gamepass').selectedIndex].text;
       const pembayaran = document.getElementById('pembayaran').value;
       const catatan = document.getElementById('catatan').value;
@@ -211,8 +209,8 @@
 
       const pesan = `Halo! Saya ingin memesan gamepass *${gamepassText}*\nUsername Roblox: ${username}\nMetode Pembayaran: ${pembayaran}\n${totalText}\nNomor WhatsApp: ${whatsapp}\nCatatan: ${catatan}`;
       const url = `https://wa.me/6285183283404?text=${encodeURIComponent(pesan)}`;
-      window.open(url, '_blank');
 
+      window.open(url, '_blank');
       setTimeout(() => {
         alert('Pesanan Anda telah dikirim ke WhatsApp. Silakan tunggu balasan dari admin.');
         document.getElementById('loading').style.display = 'none';
