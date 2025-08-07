@@ -222,7 +222,7 @@
       let biayaAdmin = 1000;
       const pembayaran = pembayaranSelect.value;
       if (pembayaran === 'Bank BRI') biayaAdmin = 4000;
-      else if (pembayaran === 'Bank Mandiri') biayaAdmin = 6500;
+      else if (pembayaran === 'Bank Mandiri') biayaAdmin = 2500;
       const total = harga + biayaAdmin;
       if (!isNaN(harga)) {
         hargaPreview.textContent = `Harga: Rp${harga.toLocaleString('id-ID')}`;
