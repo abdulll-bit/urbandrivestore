@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="UrbanDriveStore melayani pembelian Robux dan gamepass Car Driving Indonesia (CDID) dengan harga terjangkau dan proses cepat.">
+  <title>UrbanDriveStore - Jual Robux & Gamepass CDID</title>
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka&display=swap" rel="stylesheet">
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+    html, body {
+      height: 100%;
+      margin: 0;
+      font-family: 'Fredoka', sans-serif;
+      background-color: #0e0e0e;
+      color: #fff;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+    }
+    header {
+      width: 100%;
+      background: linear-gradient(90deg, #1a1a1a, #000);
+      padding: 20px 20px 10px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.5);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+    }
+    header img {
+      height: 50px;
+    }
+    header h1 {
+      margin: 0;
+      font-size: 28px;
+      color: #ffcc00;
+      font-family: 'Fredoka', sans-serif;
+    }
+    .wrapper {
+      width: 100%;
+      max-width: 640px;
+      padding: 20px;
+      margin: 0 auto;
+    }
+    .section {
+      background: #1f1f1f;
+      border-radius: 20px;
+      padding: 30px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+      animation: fadein 0.6s ease-in;
+    }
+    @keyframes fadein {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    form input,
+    form select,
+    form textarea,
+    button {
+      width: 100%;
+      padding: 14px;
+      margin-bottom: 16px;
+      border: none;
+      border-radius: 12px;
+      background: #2c2c2c;
+      color: #fff;
+      font-size: 15px;
+      transition: all 0.2s ease-in-out;
+    }
+    form input:focus,
+    form select:focus,
+    form textarea:focus {
+      outline: none;
+      border: 2px solid #ffcc00;
+      background: #333;
+    }
+    button {
+      background-color: #ffcc00;
+      color: #000;
+      font-weight: bold;
+      font-size: 16px;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #e6b800;
+    }
+    .reset-button {
+      background-color: #333;
+      margin-top: 10px;
+    }
+    #harga-preview,
+    #total-harga {
+      text-align: center;
+      font-weight: bold;
+      margin-bottom: 10px;
+    }
+    #loading {
+      display: none;
+      text-align: center;
+      margin-bottom: 15px;
+      color: #ffcc00;
+    }
+    .payment-icons {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+    .payment-icons img {
+      height: 30px;
+    }
+    .testimonial {
+      text-align: center;
+      margin-top: 30px;
+    }
+    .testimonial a {
+      display: inline-block;
+      color: #ffcc00;
+      text-decoration: none;
+      background: #2c2c2c;
+      padding: 10px 16px;
+      border-radius: 8px;
+      transition: background 0.3s;
+    }
+    .testimonial a:hover {
+      background: #444;
+    }
+    .trust-badge {
+      text-align: center;
+      color: #ffcc00;
+      margin-bottom: 10px;
+      font-weight: bold;
+    }
+    footer {
+      text-align: center;
+      font-size: 13px;
+      color: #aaa;
+      padding: 20px;
+    }
+    @media screen and (max-width: 600px) {
+      header h1 {
+        font-size: 24px;
+      }
+      .section {
+        padding: 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <img src="https://raw.githubusercontent.com/abdulll-bit/gamepass_cdid/main/ChatGPT%20Image%20Jul%2027%2C%202025%2C%2006_41_34%20AM.png" alt="Logo UrbanDriveStore">
+    <h1>UrbanDriveStore</h1>
+    <p style="text-align:center; margin:0; font-size:14px;">Robux & Gamepass CDID</p>
+  </header>
+
+  <div class="wrapper">
+    <div class="section">
+      <div class="trust-badge">✅ 100% Aman & Terpercaya – Bukti transaksi tersedia!</div>
+      <div class="payment-icons">
+        <img src="https://images.seeklogo.com/logo-png/39/1/quick-response-code-indonesia-standard-qris-logo-png_seeklogo-391791.png" alt="QRIS">
+        <img src="https://iconlogovector.com/uploads/images/2024/11/lg-673fa21a3ad2c-DANA.webp" alt="DANA">
+        <img src="https://images.seeklogo.com/logo-png/36/1/ovo-logo-png_seeklogo-369754.png" alt="OVO">
+        <img src="https://downloadr2.apkmirror.com/wp-content/uploads/2024/10/50/670c8db32acb9_com.gojek.gopay.png" alt="GoPay">
+        <img src="https://images.seeklogo.com/logo-png/42/2/bank-mandiri-logo-png_seeklogo-429063.png" alt="Bank Mandiri">
+        <img src="https://images.seeklogo.com/logo-png/45/1/bank-bri-logo-png_seeklogo-459990.png" alt="Bank BRI">
+      </div>
+      <div id="harga-preview">Harga: -</div>
+      <div id="total-harga">Total: -</div>
+      <div id="loading">Mengirim pesan ke WhatsApp...</div>
+      <form id="orderForm" onsubmit="kirimPesanWhatsApp(event)">
+        <input type="text" id="username" placeholder="Username Roblox" required>
+        <input type="text" id="whatsapp" placeholder="Nomor WhatsApp Aktif" required>
+        
+<select id="gamepass" required>
+  <option disabled selected>Pilih Produk</option>
+  <optgroup label="Gamepass CDID">
+    <option value="36260">Luxury Car - Rp36.260</option>
+    <option value="19460">Emergency Vehicle - Rp19.460</option>
+    <option value="23660">Retro Car - Rp23.660</option>
+    <option value="26460">Rare Imports - Rp26.460</option>
+    <option value="13860">+1 Additional Car - Rp13.860</option>
+    <option value="37660">+2 Additional Cars - Rp37.660</option>
+    <option value="55860">Double Paycheck - Rp55.860</option>
+    <option value="55860">50% More Job Income - Rp55.860</option>
+    <option value="11060">Luxury House Slot - Rp11.060</option>
+    <option value="27860">Advanced Tuning - Rp27.860</option>
+  </optgroup>
+  <optgroup label="Robux">
+    <option value="7000">50 Robux - Rp7.000</option>
+    <option value="14000">100 Robux - Rp14.000</option>
+    <option value="21000">150 Robux - Rp21.000</option>
+    <option value="28000">200 Robux - Rp28.000</option>
+    <option value="35000">250 Robux - Rp35.000</option>
+    <option value="42000">300 Robux - Rp42.000</option>
+    <option value="49000">350 Robux - Rp49.000</option>
+    <option value="56000">400 Robux - Rp56.000</option>
+    <option value="63000">450 Robux - Rp63.000</option>
+  </optgroup>
+</select>
+
+        <select id="pembayaran" required>
+          <option disabled selected>Pilih Metode Pembayaran</option>
+          <option value="QRIS">QRIS</option>
+          <option value="GoPay">GoPay</option>
+          <option value="Bank Mandiri">Bank Mandiri</option>
+          <option value="Bank BRI">Bank BRI</option>
+          <option value="OVO">OVO</option>
+          <option value="DANA">DANA</option>
+        </select>
+        <textarea id="catatan" rows="3" placeholder="Catatan tambahan (opsional)"></textarea>
+        <button type="submit">Pesan Sekarang</button>
+        <button type="button" class="reset-button" onclick="document.getElementById('orderForm').reset(); document.getElementById('harga-preview').textContent = 'Harga: -'; document.getElementById('total-harga').textContent = 'Total: -';">Reset Form</button>
+      </form>
+    </div>
+    <div class="testimonial">
+      <a href="https://www.instagram.com/stories/highlights/18008607845443918" target="_blank">Testimoni Pembeli</a>
+    </div>
+  </div>
+
+  <footer>
+    &copy; 2025 UrbanDriveStore. Semua Hak Dilindungi.
+  </footer>
+
+  <script>
+    const gamepassSelect = document.getElementById('gamepass');
+    const pembayaranSelect = document.getElementById('pembayaran');
+    const hargaPreview = document.getElementById('harga-preview');
+    const totalHarga = document.getElementById('total-harga');
+
+    function updateHarga() {
+      const harga = parseInt(gamepassSelect.value);
+      let biayaAdmin = 1000;
+      const pembayaran = pembayaranSelect.value;
+      if (pembayaran === 'Bank BRI') biayaAdmin = 4000;
+      else if (pembayaran === 'Bank Mandiri') biayaAdmin = 2500;
+      const total = harga + biayaAdmin;
+      if (!isNaN(harga)) {
+        hargaPreview.textContent = `Harga: Rp${harga.toLocaleString('id-ID')}`;
+        totalHarga.textContent = `Total: Rp${total.toLocaleString('id-ID')} (termasuk biaya admin Rp${biayaAdmin.toLocaleString('id-ID')})`;
+      } else {
+        hargaPreview.textContent = 'Harga: -';
+        totalHarga.textContent = 'Total: -';
+      }
+    }
+
+    gamepassSelect.addEventListener('change', updateHarga);
+    pembayaranSelect.addEventListener('change', updateHarga);
+
+    function kirimPesanWhatsApp(event) {
+      event.preventDefault();
+      const username = document.getElementById('username').value.trim();
+      const whatsapp = document.getElementById('whatsapp').value.trim();
+      const harga = parseInt(gamepassSelect.value);
+      const pembayaran = pembayaranSelect.value;
+      const catatan = document.getElementById('catatan').value.trim();
+
+      let biayaAdmin = 1000;
+      if (pembayaran === 'Bank BRI') biayaAdmin = 4000;
+      else if (pembayaran === 'Bank Mandiri') biayaAdmin = 2500;
+
+      const total = harga + biayaAdmin;
+      const gamepassText = gamepassSelect.options[gamepassSelect.selectedIndex].text;
+      const pesan = `Gamepass Yang Dipesan: *${gamepassText}*
+Username Roblox: ${username}
+Metode Pembayaran: ${pembayaran}
+Total: Rp${total.toLocaleString('id-ID')} (termasuk biaya admin Rp${biayaAdmin.toLocaleString('id-ID')})
+Nomor WhatsApp: ${whatsapp}
+Catatan: ${catatan}`;
+      const url = `https://wa.me/6285183283404?text=${encodeURIComponent(pesan)}`;
+
+      document.getElementById('loading').style.display = 'block';
+      window.open(url, '_blank');
+      setTimeout(() => document.getElementById('loading').style.display = 'none', 1500);
+    }
+  </script>
+</body>
+</html>
