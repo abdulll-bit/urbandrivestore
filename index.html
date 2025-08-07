@@ -198,12 +198,12 @@
           <option value="DANA">DANA</option>
         </select>
         <textarea id="catatan" rows="3" placeholder="Catatan tambahan (opsional)"></textarea>
-        <button type="submit">Pesan via WhatsApp</button>
+        <button type="submit">Pesan Sekarang</button>
         <button type="button" class="reset-button" onclick="document.getElementById('orderForm').reset(); document.getElementById('harga-preview').textContent = 'Harga: -'; document.getElementById('total-harga').textContent = 'Total: -';">Reset Form</button>
       </form>
     </div>
     <div class="testimonial">
-      <a href="https://www.instagram.com/stories/highlights/18008607845443918" target="_blank">Lihat Testimoni Pembeli</a>
+      <a href="https://www.instagram.com/stories/highlights/18008607845443918" target="_blank">Testimoni Pembeli</a>
     </div>
   </div>
 
@@ -246,11 +246,11 @@
 
       let biayaAdmin = 1000;
       if (pembayaran === 'Bank BRI') biayaAdmin = 4000;
-      else if (pembayaran === 'Bank Mandiri') biayaAdmin = 6500;
+      else if (pembayaran === 'Bank Mandiri') biayaAdmin = 2500;
 
       const total = harga + biayaAdmin;
       const gamepassText = gamepassSelect.options[gamepassSelect.selectedIndex].text;
-      const pesan = `Halo! Saya ingin memesan gamepass *${gamepassText}*
+      const pesan = `PESANAN MASUK *${gamepassText}*
 Username Roblox: ${username}
 Metode Pembayaran: ${pembayaran}
 Total: Rp${total.toLocaleString('id-ID')} (termasuk biaya admin Rp${biayaAdmin.toLocaleString('id-ID')})
