@@ -150,6 +150,44 @@
       .payment-icons img { height: 26px; }
       .social-links img { height: 24px; }
     }
+    /* Popup Tutorial */
+    .modal-overlay {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: rgba(0,0,0,0.8);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 9999;
+    }
+    .modal {
+      background: #1f1f1f;
+      border-radius: 16px;
+      width: 100%;
+      max-width: 560px;
+      padding: 20px;
+      text-align: center;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.5);
+      animation: fadein 0.3s ease-in-out;
+    }
+    .modal h3 { color: #ffcc00; margin-bottom: 10px; }
+    .modal p.info { color: #ccc; margin-top: 0; margin-bottom: 12px; }
+    .modal iframe { width: 100%; height: 320px; border: none; border-radius: 8px; margin-bottom: 12px; }
+    .modal button {
+      margin: 6px 8px;
+      padding: 12px 18px;
+      border: none;
+      border-radius: 8px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background 0.2s ease;
+    }
+    .modal .btn-primary { background: #ffcc00; color: #000; }
+    .modal .btn-secondary { background: #333; color: #fff; }
+    .modal .btn-primary:hover { background: #e6b800; }
+    .modal .btn-secondary:hover { background: #555; }
+    .small-note { font-size: 13px; color: #bbb; margin-top: 8px; }
   </style>
 </head>
 <body>
@@ -240,6 +278,10 @@
         <button class="faq-question">Berapa lama robux masuk ke akun saya?</button>
         <div class="faq-answer">Setelah pengiriman robux, robux akan sampai dalam 5-6 hari. Jika tidak tiba dalam waktu 5-6 hari bisa chat melalui Nomor: 0851-8328-3404</div>
       </div>
+      <div class="faq-item">
+        <button id="faq-gamepass" class="faq-question">Cara Membuat Gamepass untuk Produk Robux</button>
+        <div class="faq-answer">Klik untuk melihat tutorial langkah demi langkah pembuatan Gamepass.</div>
+      </div>
     </section>
 
     <div class="testimonial">
@@ -251,12 +293,29 @@
     &copy; 2025 UrbanDriveStore. Semua Hak Dilindungi.
   </footer>
 
+  <!-- Modal Tutorial -->
+  <div class="modal-overlay" id="tutorialModal" aria-hidden="true">
+    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle" id="modalContent">
+      <h3 id="modalTitle">Cara Membuat Gamepass</h3>
+      <p class="info" id="modalInfo">Tutorial pembuatan gamepass untuk nominal yang dipilih.</p>
+      <iframe id="modalVideo" src="" allowfullscreen title="Video tutorial membuat gamepass"></iframe>
+      <div>
+        <button class="btn-primary" id="btnCreate">Buat Gamepass</button>
+        <button class="btn-secondary" id="btnDone">Sudah Buat Gamepass</button>
+        <button class="btn-secondary" id="btnClose">Kembali</button>
+      </div>
+      <div class="small-note">Catatan: Harga di Roblox ditampilkan dalam R$ (Robux). Pastikan kamu membuat Gamepass dengan harga yang sesuai.</div>
+    </div>
+  </div>
+
   <script>
+    // Elements
     const gamepassSelect = document.getElementById('gamepass');
     const pembayaranSelect = document.getElementById('pembayaran');
     const hargaPreview = document.getElementById('harga-preview');
     const totalHarga = document.getElementById('total-harga');
 
+    // Update harga preview berdasarkan pilihan
     function updateHarga() {
       const harga = parseInt(gamepassSelect.value);
       let biayaAdmin = 1000;
@@ -272,6 +331,7 @@
       }
     }
 
+    // Kirim pesan WhatsApp
     function kirimPesanWhatsApp(event) {
       event.preventDefault();
       const username = document.getElementById('username').value.trim();
@@ -312,6 +372,83 @@ Catatan: ${catatan}`;
         button.classList.toggle('active');
       });
     });
+
+    // Mapping harga gamepass Roblox (konversi)
+    const hargaGamepassRoblox = {
+      "50": "72 R$",
+      "100": "143 R$",
+      "150": "215 R$",
+      "200": "286 R$",
+      "250": "358 R$",
+      "300": "429 R$",
+      "350": "501 R$",
+      "400": "572 R$",
+      "450": "643 R$"
+    };
+
+    // Popup Tutorial
+    const modalOverlay = document.getElementById('tutorialModal');
+    const modalContent = document.getElementById('modalContent');
+    const modalTitle = document.getElementById('modalTitle');
+    const modalInfo = document.getElementById('modalInfo');
+    const modalVideo = document.getElementById('modalVideo');
+    const btnClose = document.getElementById('btnClose');
+    const btnCreate = document.getElementById('btnCreate');
+    const btnDone = document.getElementById('btnDone');
+
+    // Helper: ambil angka Robux dari teks option, misal "50 Robux - Rp7.000" -> "50"
+    function extractRobuxAmount(optionText) {
+      const match = optionText.match(/^(\d{1,3})\s*Robux/);
+      if (match) return match[1];
+      // fallback: coba ambil angka pertama
+      const m2 = optionText.match(/(\d{1,3})/);
+      return m2 ? m2[1] : null;
+    }
+
+    document.getElementById('faq-gamepass').addEventListener('click', () => {
+      const selectedOption = gamepassSelect.selectedOptions[0];
+      if (!selectedOption || selectedOption.disabled) {
+        alert("Silakan pilih produk Robux di form terlebih dahulu.");
+        return;
+      }
+      const productText = selectedOption.text; // e.g. "50 Robux - Rp7.000"
+      const robuxAmount = extractRobuxAmount(productText);
+      let judul = `Cara Membuat Gamepass untuk ${productText}`;
+      let infoText = 'Tutorial pembuatan Gamepass untuk nominal yang dipilih.';
+      if (robuxAmount && hargaGamepassRoblox[robuxAmount]) {
+        infoText = `Harga Gamepass di Roblox: ${hargaGamepassRoblox[robuxAmount]} (untuk ${robuxAmount} Robux)`;
+        judul = `Cara Membuat Gamepass untuk ${robuxAmount} Robux (${hargaGamepassRoblox[robuxAmount]} di Roblox)`;
+      }
+      modalTitle.textContent = judul;
+      modalInfo.textContent = infoText;
+      modalVideo.src = 'https://www.youtube.com/embed/2raxL-VgRWM';
+      modalOverlay.style.display = 'flex';
+      modalOverlay.setAttribute('aria-hidden', 'false');
+    });
+
+    function closeModal() {
+      modalOverlay.style.display = 'none';
+      modalOverlay.setAttribute('aria-hidden', 'true');
+      modalVideo.src = '';
+    }
+
+    btnClose.onclick = closeModal;
+    btnDone.onclick = closeModal;
+    btnCreate.onclick = () => {
+      // arahkan ke Roblox Create > Developers (buka tab baru)
+      window.open('https://www.roblox.com/develop', '_blank');
+    };
+
+    // Tutup saat klik di luar modalContent
+    modalOverlay.addEventListener('click', (e) => {
+      if (e.target === modalOverlay) closeModal();
+    });
+
+    // Keyboard: Escape untuk tutup modal
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && modalOverlay.style.display === 'flex') closeModal();
+    });
+
   </script>
 </body>
 </html>
