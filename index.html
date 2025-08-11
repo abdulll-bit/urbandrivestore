@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <link rel="icon" href="https://raw.githubusercontent.com/abdulll-bit/gamepass_cdid/refs/heads/main/favicon.png" type="image/png">
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>UrbanDriveStore — Beli Robux & Gamepass CDID Aman & Cepat</title>
@@ -199,6 +198,62 @@
 
 #checkoutCancel { background:#ccc; }
 #checkoutSubmit { background:#ffcc00; }
+
+
+/* === Responsive Styles === */
+@media (max-width: 768px) {
+  .nav {
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  .search {
+    order: 3;
+    width: 100%;
+    margin-left: 0;
+  }
+  .hero-grid {
+    grid-template-columns: 1fr;
+  }
+  .main-grid {
+    grid-template-columns: 1fr;
+  }
+  .sidebar {
+    display: none;
+  }
+  .catalog {
+    grid-template-columns: repeat(auto-fill,minmax(160px,1fr));
+  }
+  .modal .row {
+    flex-direction: column;
+  }
+  .modal .thumb {
+    width: 100%;
+    height: 200px;
+  }
+  .checkout-content {
+    width: 95%;
+    padding: 15px;
+  }
+}
+
+@media (max-width: 480px) {
+  .brand h1 {
+    font-size: 16px;
+  }
+  .btn-primary, .btn-ghost {
+    padding: 10px 12px;
+    font-size: 14px;
+  }
+  .product h4 {
+    font-size: 14px;
+  }
+  .product p {
+    font-size: 12px;
+  }
+  .price {
+    font-size: 14px;
+  }
+}
 
 </style>
 </head>
