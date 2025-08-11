@@ -1,455 +1,850 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <link rel="icon" href="https://raw.githubusercontent.com/abdulll-bit/gamepass_cdid/refs/heads/main/favicon.png" type="image/png">
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="UrbanDriveStore melayani pembelian Robux dan gamepass Car Driving Indonesia (CDID) dengan harga terjangkau dan proses cepat." />
-  <title>UrbanDriveStore - Jual Robux & Gamepass CDID</title>
-  <link href="https://fonts.googleapis.com/css2?family=Fredoka&display=swap" rel="stylesheet" />
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>UrbanDriveStore — Beli Robux & Gamepass CDID Aman & Cepat</title>
+  <meta name="description" content="UrbanDriveStore - beli Robux & Gamepass CDID. Marketplace prototype: katalog, keranjang, filter, checkout via WhatsApp." />
+  <meta property="og:title" content="UrbanDriveStore — Beli Robux & Gamepass CDID" />
+  <meta property="og:description" content="Promo harian, pengiriman cepat, panduan Gamepass. Checkout via WhatsApp." />
+  <meta property="og:image" content="/assets/uds-og.png" />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
   <style>
-    * { box-sizing: border-box; }
-    html, body {
-      height: 100%;
-      margin: 0;
-      font-family: 'Fredoka', sans-serif;
-      background-color: #0e0e0e;
-      color: #fff;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: flex-start;
-      padding: 0 10px;
+    :root{--bg:#070707;--card:#121212;--muted:#9aa0a6;--accent:#ffcc00;--accent-2:#ff8a00;--glass: rgba(255,255,255,0.03);--success:#22c55e}
+    *{box-sizing:border-box}
+    html,body{height:100%;margin:0;font-family:'Poppins',sans-serif;background:linear-gradient(180deg,var(--bg),#050505);color:#fff}
+    a{color:inherit}
+    header{position:sticky;top:0;z-index:40;background:linear-gradient(90deg,#0b0b0b, rgba(255,204,0,0.03));backdrop-filter: blur(4px);border-bottom:1px solid rgba(255,255,255,0.03)}
+    .container{max-width:1200px;margin:0 auto;padding:18px}
+    .nav{display:flex;align-items:center;justify-content:space-between;gap:12px}
+    .brand{display:flex;align-items:center;gap:12px}
+    .logo{height:44px;width:44px;border-radius:10px;background:linear-gradient(135deg,var(--accent),var(--accent-2));display:flex;align-items:center;justify-content:center;color:#000;font-weight:700}
+    .brand h1{font-size:18px;margin:0;color:var(--accent);letter-spacing:0.4px}
+    .search{flex:1;margin-left:18px}
+    .search input{width:100%;padding:10px 14px;border-radius:10px;border:none;background:var(--glass);color:#fff}
+    .actions{display:flex;align-items:center;gap:10px}
+    .icon-btn{background:var(--card);padding:8px;border-radius:10px;border:1px solid rgba(255,255,255,0.03);cursor:pointer}
+
+    /* HERO */
+    .hero{padding:36px 0;background:linear-gradient(180deg,rgba(255,204,0,0.02),transparent)}
+    .hero-grid{display:grid;grid-template-columns:1fr 360px;gap:24px;align-items:center}
+    .hero-title{font-size:28px;margin-bottom:10px;color:var(--accent)}
+    .hero-sub{color:var(--muted);margin-bottom:18px}
+    .cta-row{display:flex;gap:12px}
+    .btn-primary{background:linear-gradient(90deg,var(--accent),var(--accent-2));padding:12px 16px;border-radius:10px;color:#000;font-weight:700;border:none;cursor:pointer}
+    .btn-ghost{background:transparent;border:1px solid rgba(255,255,255,0.06);padding:10px;border-radius:10px;color:var(--muted);cursor:pointer}
+
+    .stats{display:flex;gap:12px;flex-wrap:wrap;margin-top:14px}
+    .stat{background:linear-gradient(180deg,rgba(255,255,255,0.02),transparent);padding:12px;border-radius:10px;min-width:110px;text-align:center}
+    .stat strong{display:block;color:var(--accent);font-size:18px}
+    .stat small{color:var(--muted)}
+
+    /* LAYOUT */
+    main{padding:14px 0 80px}
+    .main-grid{display:grid;grid-template-columns:260px 1fr;gap:20px}
+
+    /* SIDEBAR */
+    .sidebar{position:sticky;top:86px;background:var(--card);padding:16px;border-radius:12px;border:1px solid rgba(255,255,255,0.03)}
+    .filters h3{margin:0 0 10px 0;color:var(--accent)}
+    .category-list{display:flex;flex-direction:column;gap:8px}
+    .category{padding:8px;border-radius:8px;background:transparent;border:1px solid rgba(255,255,255,0.02);cursor:pointer}
+    .category.active{background:linear-gradient(90deg,var(--accent),var(--accent-2));color:#000;font-weight:600}
+    .range{margin-top:12px}
+
+    /* PRODUCTS */
+    .catalog{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:16px}
+    .product{background:var(--card);border-radius:12px;overflow:hidden;border:1px solid rgba(255,255,255,0.03);display:flex;flex-direction:column}
+    .product .thumb{height:140px;background-size:cover;background-position:center}
+    .product .body{padding:12px;flex:1;display:flex;flex-direction:column}
+    .product h4{margin:0 0 6px 0;color:var(--accent);font-size:15px}
+    .product p{margin:0 0 8px 0;color:var(--muted);font-size:13px}
+    .price-row{display:flex;justify-content:space-between;align-items:center;margin-top:auto}
+    .price{font-weight:700}
+    .add{background:var(--accent);padding:8px 10px;border-radius:8px;color:#000;border:none;cursor:pointer}
+
+    /* CART */
+    .cart-bar{position:fixed;right:18px;bottom:18px;background:linear-gradient(90deg,var(--accent),var(--accent-2));padding:12px;border-radius:12px;box-shadow:0 10px 30px rgba(0,0,0,0.5);z-index:100}
+    .cart-count{background:#000;color:var(--accent);padding:6px 8px;border-radius:8px;font-weight:700;margin-left:8px}
+
+    /* CART SIDEBAR */
+    .cart-sidebar{position:fixed;right:18px;top:86px;width:360px;max-height:72vh;background:#0e0e0e;border-radius:12px;padding:12px;border:1px solid rgba(255,255,255,0.03);overflow:auto;box-shadow:0 10px 30px rgba(0,0,0,0.6);display:none;z-index:120}
+    .cart-item{display:flex;gap:10px;padding:8px 0;border-bottom:1px solid rgba(255,255,255,0.03)}
+    .cart-item img{width:64px;height:48px;object-fit:cover;border-radius:8px}
+    .cart-actions{display:flex;gap:8px;align-items:center;margin-top:12px}
+    .checkout-btn{flex:1;background:var(--accent);border:none;padding:10px;border-radius:8px;color:#000;font-weight:700;cursor:pointer}
+    .clear-btn{background:transparent;border:1px solid rgba(255,255,255,0.06);padding:8px;border-radius:8px;color:var(--muted);cursor:pointer}
+
+    /* MODAL */
+    .modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.7);display:none;align-items:center;justify-content:center;z-index:200}
+    .modal{background:#121212;padding:20px;border-radius:12px;max-width:720px;width:95%;max-height:86vh;overflow:auto}
+    .modal .row{display:flex;gap:16px}
+    .modal .thumb{flex:0 0 260px;height:180px;background-size:cover;border-radius:10px}
+    .modal .info{flex:1}
+    .modal h3{margin-top:0;color:var(--accent)}
+
+    /* MOBILE FILTER */
+    .mobile-filter-btn{display:none;position:fixed;left:18px;bottom:18px;z-index:110;background:var(--card);border-radius:12px;padding:10px;border:1px solid rgba(255,255,255,0.03)}
+    .filter-drawer{position:fixed;left:0;right:0;bottom:0;background:#0e0e0e;padding:16px;border-radius:12px 12px 0 0;display:none;z-index:210}
+
+    /* FOOTER */
+    footer{padding:36px 0;margin-top:30px;color:var(--muted);text-align:center}
+
+
+    /* Instagram Stories Section Styles */
+    .instagram-stories-section {
+      margin-top: 28px;
+      background: linear-gradient(180deg, rgba(255,255,255,0.02), transparent);
+      padding: 16px;
+      border-radius: 12px;
     }
-    header {
-      width: 100%;
-      background: linear-gradient(90deg, #1a1a1a, #000);
-      padding: 20px 20px 10px;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.5);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      text-align: center;
+    .instagram-stories-section h3 {
+      margin: 0 0 8px 0;
+      color: var(--accent);
     }
-    header img { height: 50px; }
-    header h1 { margin: 5px 0 0; font-size: 28px; color: #ffcc00; }
-    header p { margin: 0; font-size: 14px; }
-    .social-links {
+    .stories-container {
       display: flex;
-      justify-content: center;
       gap: 12px;
-      margin-top: 10px;
+      overflow-x: auto; /* Allow horizontal scrolling */
+      padding-bottom: 10px; /* Space for scrollbar */
+      -webkit-overflow-scrolling: touch; /* Smooth scrolling on iOS */
+      scrollbar-width: thin; /* Firefox */
+      scrollbar-color: var(--accent) transparent; /* Firefox */
     }
-    .social-links img {
-      height: 26px;
-      transition: transform 0.2s ease;
+    .stories-container::-webkit-scrollbar {
+      height: 6px;
     }
-    .social-links img:hover { transform: scale(1.1); }
-    .wrapper {
-      width: 100%;
-      max-width: 640px;
-      padding: 20px;
-      margin: 0 auto;
+    .stories-container::-webkit-scrollbar-track {
+      background: rgba(255,255,255,0.05);
+      border-radius: 10px;
     }
-    .section {
-      background: #1f1f1f;
-      border-radius: 20px;
-      padding: 30px;
-      box-shadow: 0 4px 20px rgba(0,0,0,0.4);
-      animation: fadein 0.6s ease-in;
+    .stories-container::-webkit-scrollbar-thumb {
+      background-color: var(--accent);
+      border-radius: 10px;
+      border: 1px solid var(--card);
     }
-    @keyframes fadein {
-      from { opacity: 0; transform: translateY(20px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-    form input, form select, form textarea, button {
-      width: 100%;
-      padding: 14px;
-      margin-bottom: 16px;
-      border: none;
-      border-radius: 12px;
-      background: #2c2c2c;
-      color: #fff;
-      font-size: 15px;
-      transition: all 0.2s ease-in-out;
-    }
-    form input:focus, form select:focus, form textarea:focus {
-      outline: none;
-      border: 2px solid #ffcc00;
-      background: #333;
-    }
-    button {
-      background-color: #ffcc00;
-      color: #000;
-      font-weight: bold;
-      font-size: 16px;
-      cursor: pointer;
-      min-height: 48px;
-    }
-    button:hover { background-color: #e6b800; }
-    .reset-button { background-color: #333; margin-top: 10px; }
-    #harga-preview, #total-harga {
+    .story-item {
+      flex: 0 0 auto; /* Prevent shrinking */
+      width: 80px; /* Fixed width for each story circle */
       text-align: center;
-      font-weight: bold;
-      margin-bottom: 10px;
-    }
-    #loading { display: none; text-align: center; margin-bottom: 15px; color: #ffcc00; }
-    .payment-icons {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 10px;
-      margin-bottom: 20px;
-    }
-    .payment-icons img { height: 30px; }
-    .testimonial { text-align: center; margin-top: 30px; }
-    .testimonial a {
-      display: inline-block;
-      color: #ffcc00;
       text-decoration: none;
-      background: #2c2c2c;
-      padding: 10px 16px;
-      border-radius: 8px;
-      transition: background 0.3s;
+      color: inherit;
     }
-    .testimonial a:hover { background: #444; }
-    .trust-badge {
-      text-align: center;
-      color: #ffcc00;
-      margin-bottom: 10px;
-      font-weight: bold;
-    }
-    .faq {
-      background: #1f1f1f;
-      border-radius: 12px;
-      padding: 20px;
-      margin-top: 30px;
-    }
-    .faq h2 { color: #ffcc00; margin-bottom: 15px; }
-    .faq-item { margin-bottom: 10px; }
-    .faq-question {
-      background: #2c2c2c;
-      color: #fff;
-      border: none;
-      width: 100%;
-      text-align: left;
-      padding: 12px;
-      border-radius: 8px;
-      cursor: pointer;
-    }
-    .faq-answer { display: none; padding: 10px; color: #ccc; }
-    .faq-question.active + .faq-answer { display: block; }
-    footer {
-      text-align: center;
-      font-size: 13px;
-      color: #aaa;
-      padding: 20px;
-    }
-    @media screen and (max-width: 600px) {
-      header h1 { font-size: 24px; }
-      .section { padding: 20px; }
-      .payment-icons img { height: 26px; }
-      .social-links img { height: 24px; }
-    }
-    /* Popup Tutorial */
-    .modal-overlay {
-      position: fixed;
-      top: 0; left: 0;
-      width: 100%; height: 100%;
-      background: rgba(0,0,0,0.8);
-      display: none;
+    .story-circle {
+      width: 70px;
+      height: 70px;
+      border-radius: 50%;
+      background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%); /* Instagram gradient */
+      display: flex;
       align-items: center;
       justify-content: center;
-      z-index: 9999;
+      margin: 0 auto 5px;
+      padding: 3px; /* Border thickness */
+      box-sizing: border-box;
     }
-    .modal {
-      background: #1f1f1f;
-      border-radius: 16px;
+    .story-thumbnail {
       width: 100%;
-      max-width: 560px;
-      padding: 20px;
-      text-align: center;
-      box-shadow: 0 4px 20px rgba(0,0,0,0.5);
-      animation: fadein 0.3s ease-in-out;
+      height: 100%;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 2px solid var(--card); /* Inner border */
     }
-    .modal h3 { color: #ffcc00; margin-bottom: 10px; }
-    .modal p.info { color: #ccc; margin-top: 0; margin-bottom: 12px; }
-    .modal iframe { width: 100%; height: 320px; border: none; border-radius: 8px; margin-bottom: 12px; }
-    .modal button {
-      margin: 6px 8px;
-      padding: 12px 18px;
-      border: none;
-      border-radius: 8px;
-      font-weight: bold;
-      cursor: pointer;
-      transition: background 0.2s ease;
+    .story-label {
+      font-size: 0.75rem;
+      color: var(--muted);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
-    .modal .btn-primary { background: #ffcc00; color: #000; }
-    .modal .btn-secondary { background: #333; color: #fff; }
-    .modal .btn-primary:hover { background: #e6b800; }
-    .modal .btn-secondary:hover { background: #555; }
-    .small-note { font-size: 13px; color: #bbb; margin-top: 8px; }
-  </style>
+
+
+.checkout-modal {
+  display:none; position:fixed; top:0; left:0; width:100%; height:100%;
+  background:rgba(0,0,0,0.6); justify-content:center; align-items:center; z-index:200;
+  animation: fadeIn 0.3s ease;
+}
+@keyframes fadeIn {
+  from {opacity:0;}
+  to {opacity:1;}
+}
+.checkout-content {
+  background:#fff; color:#000; padding:25px; border-radius:12px; width:90%; max-width:420px;
+  box-shadow:0 6px 20px rgba(0,0,0,0.4); transform: translateY(-30px); opacity:0;
+  animation: slideUp 0.4s ease forwards;
+}
+@keyframes slideUp {
+  to {transform: translateY(0); opacity:1;}
+}
+.checkout-content h2 { margin-bottom:20px; text-align:center; font-size:1.4rem; color:#333; }
+.checkout-content label { display:block; margin-top:12px; font-weight:600; font-size:0.9rem; color:#444; }
+.checkout-content input, .checkout-content select, .checkout-content textarea {
+  width:100%; padding:10px; margin-top:5px; border-radius:8px; border:1px solid #ccc; font-size:14px;
+  transition:border-color 0.2s ease, box-shadow 0.2s ease;
+}
+.checkout-content input:focus, .checkout-content select:focus, .checkout-content textarea:focus {
+  border-color:#ffcc00; box-shadow:0 0 4px rgba(255,204,0,0.6); outline:none;
+}
+.checkout-content textarea { resize:vertical; min-height:70px; }
+.checkout-actions { display:flex; justify-content:flex-end; gap:10px; margin-top:20px; }
+.checkout-actions button {
+  padding:9px 16px; border:none; border-radius:8px; cursor:pointer; font-weight:600; font-size:0.9rem;
+  transition: background 0.2s ease, transform 0.2s ease;
+}
+.checkout-actions button:hover { transform: translateY(-1px); }
+#checkoutCancel { background:#ccc; color:#333; }
+#checkoutCancel:hover { background:#bbb; }
+#checkoutSubmit { background:#ffcc00; color:#000; }
+#checkoutSubmit:hover { background:#e6b800; }
+.error-msg { color:red; font-size:0.8rem; margin-top:4px; display:none; }
+
+#checkoutCancel { background:#ccc; }
+#checkoutSubmit { background:#ffcc00; }
+
+</style>
 </head>
 <body>
   <header>
-    <img src="https://raw.githubusercontent.com/abdulll-bit/gamepass_cdid/main/ChatGPT%20Image%20Jul%2027%2C%202025%2C%2006_41_34%20AM.png" alt="Logo UrbanDriveStore" />
-    <h1>UrbanDriveStore</h1>
-    <p>Robux & Gamepass CDID</p>
-    <div class="social-links">
-      <a href="https://www.instagram.com/urbandrive.store" target="_blank"><img src="https://upload.wikimedia.org/wikipedia/commons/a/a5/Instagram_icon.png" alt="Instagram" /></a>
-      <a href="https://discord.gg/pRg8J4tpM9" target="_blank"><img src="https://raw.githubusercontent.com/abdulll-bit/gamepass_cdid/refs/heads/main/discord_icon_130958.svg" alt="Discord" /></a>
-      <a href="https://www.tiktok.com/@babangabd0" target="_blank"><img src="https://raw.githubusercontent.com/abdulll-bit/gamepass_cdid/refs/heads/main/tiktok_logo_icon_189233.svg" alt="TikTok" /></a>
+    <div class="container nav">
+      <div class="brand">
+        <div class="logo" aria-hidden="true">UD</div>
+        <div>
+          <h1>UrbanDriveStore</h1>
+          <div style="font-size:12px;color:var(--muted)">Robux & Gamepass CDID — Aman & Cepat</div>
+        </div>
+      </div>
+
+      <div class="search">
+        <input id="searchInput" aria-label="Cari produk" placeholder="Cari produk, misal: Robux, Luxury Car, 50 Robux..." />
+      </div>
+
+      <div class="actions">
+        <button class="icon-btn" id="btnCartSmall" title="Keranjang" aria-label="Buka keranjang">🛒 <span id="cartBadge" style="margin-left:6px;color:var(--accent)">0</span></button>
+      </div>
     </div>
   </header>
 
-  <div class="wrapper">
-    <div class="section">
-      <div class="trust-badge">✅ 100% Aman & Terpercaya – Bukti transaksi tersedia!</div>
-      <div class="payment-icons">
-        <img src="https://images.seeklogo.com/logo-png/39/1/quick-response-code-indonesia-standard-qris-logo-png_seeklogo-391791.png" alt="QRIS">
-        <img src="https://iconlogovector.com/uploads/images/2024/11/lg-673fa21a3ad2c-DANA.webp" alt="DANA">
-        <img src="https://images.seeklogo.com/logo-png/36/1/ovo-logo-png_seeklogo-369754.png" alt="OVO">
-        <img src="https://downloadr2.apkmirror.com/wp-content/uploads/2024/10/50/670c8db32acb9_com.gojek.gopay.png" alt="GoPay">
-        <img src="https://images.seeklogo.com/logo-png/42/2/bank-mandiri-logo-png_seeklogo-429063.png" alt="Bank Mandiri">
-        <img src="https://images.seeklogo.com/logo-png/45/1/bank-bri-logo-png_seeklogo-459990.png" alt="Bank BRI">
+  <section class="hero">
+    <div class="container hero-grid">
+      <div>
+        <div class="hero-title">Lebih Cepat, Lebih Aman — Dapatkan Robux & Gamepass CDID</div>
+        <div class="hero-sub">Promo harian, pengiriman cepat, dan panduan pembuatan Gamepass. Pilih produk, tambahkan ke keranjang, dan checkout lewat WhatsApp.</div>
+        <div class="cta-row">
+          <button class="btn-primary" id="btnShopNow">Mulai Belanja</button>
+          <button class="btn-ghost" id="btnHow" aria-haspopup="dialog">Cara Order</button>
+        </div>
+
+        <div class="stats">
+          <div class="stat"><strong>20+</strong><small>Transaksi</small></div>
+          <div class="stat"><strong>4.0 ★</strong><small>Rating Customer</small></div>
+          <div class="stat"><strong>24/7</strong><small>Support</small></div>
+        </div>
       </div>
-      <div id="harga-preview">Harga: -</div>
-      <div id="total-harga">Total: -</div>
-      <div id="loading">Mengirim pesan ke WhatsApp...</div>
 
-      <form id="orderForm" onsubmit="kirimPesanWhatsApp(event)">
-        <input type="text" id="username" placeholder="Username Roblox" required>
-        <input type="text" id="whatsapp" placeholder="Nomor WhatsApp Aktif (contoh: 08xxxxxxxxxx)" required>
-
-        <select id="gamepass" required>
-          <option disabled selected>Pilih Produk</option>
-          <optgroup label="Gamepass CDID">
-            <option value="36260">Luxury Car - Rp36.260</option>
-            <option value="19460">Emergency Vehicle - Rp19.460</option>
-            <option value="23660">Retro Car - Rp23.660</option>
-            <option value="26460">Rare Imports - Rp26.460</option>
-            <option value="13860">+1 Additional Car - Rp13.860</option>
-            <option value="37660">+2 Additional Cars - Rp37.660</option>
-            <option value="55860">Double Paycheck - Rp55.860</option>
-            <option value="55860">50% More Job Income - Rp55.860</option>
-            <option value="11060">Luxury House Slot - Rp11.060</option>
-            <option value="27860">Advanced Tuning - Rp27.860</option>
-          </optgroup>
-          <optgroup label="Robux">
-            <option value="7000">50 Robux - Rp7.000</option>
-            <option value="14000">100 Robux - Rp14.000</option>
-            <option value="21000">150 Robux - Rp21.000</option>
-            <option value="28000">200 Robux - Rp28.000</option>
-            <option value="35000">250 Robux - Rp35.000</option>
-            <option value="42000">300 Robux - Rp42.000</option>
-            <option value="49000">350 Robux - Rp49.000</option>
-            <option value="56000">400 Robux - Rp56.000</option>
-            <option value="63000">450 Robux - Rp63.000</option>
-          </optgroup>
-        </select>
-
-        <select id="pembayaran" required>
-          <option disabled selected>Pilih Metode Pembayaran</option>
-          <option value="QRIS">QRIS</option>
-          <option value="GoPay">GoPay</option>
-          <option value="Bank Mandiri">Bank Mandiri</option>
-          <option value="Bank BRI">Bank BRI</option>
-          <option value="OVO">OVO</option>
-          <option value="DANA">DANA</option>
-        </select>
-
-        <textarea id="catatan" rows="3" placeholder="Catatan tambahan (opsional)"></textarea>
-        <button type="submit">Pesan Sekarang</button>
-        <button type="button" class="reset-button" onclick="resetForm()">Reset Form</button>
-      </form>
+      <div style="background:var(--card);padding:14px;border-radius:12px;border:1px solid rgba(255,255,255,0.03)">
+        <div style="display:flex;align-items:center;gap:12px;margin-bottom:10px">
+          <div style="width:64px;height:64px;background:linear-gradient(90deg,var(--accent),var(--accent-2));border-radius:12px"></div>
+          <div>
+            <div style="color:var(--accent);font-weight:700">Promo Bulan Ini</div>
+            <div style="color:var(--muted);font-size:13px">Diskon khusus untuk pembelian gamepass</div>
+          </div>
+        </div>
+        <div style="font-size:13px;color:var(--muted)">Masukkan username & nomor WA saat checkout. Kita akan konfirmasi via WhatsApp.</div>
+      </div>
     </div>
+  </section>
 
-    <section class="faq">
-      <h2>FAQ (Frequently Asked Question)</h2>
-      <div class="faq-item">
-        <button class="faq-question">Berapa lama prosesnya?</button>
-        <div class="faq-answer">Hanya memerlukan 1-2 menit setelah pembayaran terkonfirmasi. Lalu, kami akan proses secepatnya.</div>
-      </div>
-      <div class="faq-item">
-        <button class="faq-question">Apakah aman?</button>
-        <div class="faq-answer">Ya, 100% aman. Kami telah melayani banyak customer dan mereka senang atas pelayanannya yang cepat dan responsif.</div>
-      </div>
-      <div class="faq-item">
-        <button class="faq-question">Berapa lama robux masuk ke akun saya?</button>
-        <div class="faq-answer">Setelah pengiriman robux, robux akan sampai dalam 5-6 hari. Jika tidak tiba dalam waktu 5-6 hari bisa chat melalui Nomor: 0851-8328-3404</div>
-      </div>
-      <div class="faq-item">
-        <button id="faq-gamepass" class="faq-question">Cara Membuat Gamepass untuk Produk Robux</button>
-        <div class="faq-answer">Klik untuk melihat tutorial langkah demi langkah pembuatan Gamepass.</div>
-      </div>
-    </section>
+  <main class="container">
+    <div class="main-grid">
+      <aside class="sidebar" id="sidebar">
+        <div class="filters">
+          <h3>Filter</h3>
+          <div style="margin-bottom:8px;color:var(--muted);font-size:13px">Kategori</div>
+          <div class="category-list" id="categoryList"></div>
 
-    <div class="testimonial">
-      <a href="https://www.instagram.com/stories/highlights/18008607845443918" target="_blank">Testimoni Pembeli</a>
+          <div class="range">
+            <div style="margin-top:12px;color:var(--muted);font-size:13px">Harga (maks)</div>
+            <input type="range" id="priceRange" min="0" max="100000" step="1000" value="100000" />
+            <div style="font-size:13px;color:var(--muted);margin-top:6px">Rp <span id="priceRangeVal">100000</span></div>
+          </div>
+        </div>
+
+        <div style="margin-top:18px">
+          <h3>Tips Cepat</h3>
+          <ul style="color:var(--muted);font-size:13px">
+            <li>Buat Gamepass terlebih dahulu jika tidak tahu cara membuatnya anda bisa mengunjungi FAQ.</li>
+            <li>Gunakan metode pembayaran QRIS atau GoPay jika anda memang membutuhkan produk secepatnya.</li>
+            <li>Chat customer service jika ada kendala seperti proses checkout, pemilihan produk dll.</li>
+          </ul>
+        </div>
+      </aside>
+
+      <section>
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">
+          <div style="color:var(--muted);font-size:14px">Menampilkan <span id="productCount">0</span> produk</div>
+          <div style="display:flex;gap:8px;align-items:center">
+            <select id="sortSelect" style="background:var(--card);border-radius:8px;padding:8px;border:1px solid rgba(255,255,255,0.03);color:var(--muted)">
+              <option value="relevance">Terbaru</option>
+              <option value="price_asc">Harga terendah</option>
+              <option value="price_desc">Harga tertinggi</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="catalog" id="catalog" aria-live="polite"></div>
+
+        <!-- Bagian Instagram Stories Baru -->
+        <div class="instagram-stories-section" id="instagramStories">
+          <h3 style="margin:0 0 8px 0;color:var(--accent)">Testimoni Pembelian Produk</h3>
+          <div class="stories-container">
+            <!-- Testimoni Gamepass -->
+            <a href="https://www.instagram.com/stories/highlights/18008607845443918/" target="_blank" class="story-item">
+              <div class="story-circle">
+                <!-- Ganti src dengan gambar thumbnail yang relevan, atau biarkan placeholder -->
+                <img src="https://via.placeholder.com/60/FFD700/000000?text=GP" alt="Testimoni Gamepass" class="story-thumbnail">
+              </div>
+              <div class="story-label">Testimoni Gamepass</div>
+            </a>
+            <!-- Testimoni Robux -->
+            <a href="https://www.instagram.com/stories/highlights/17970470933688363/" target="_blank" class="story-item">
+              <div class="story-circle">
+                <!-- Ganti src dengan gambar thumbnail yang relevan, atau biarkan placeholder -->
+                <img src="https://via.placeholder.com/60/FF8C00/000000?text=RBX" alt="Testimoni Robux" class="story-thumbnail">
+              </div>
+              <div class="story-label">Testimoni Robux</div>
+            </a>
+          </div>
+        </div>
+        <!-- Akhir Bagian Instagram Stories Baru -->
+
+      </section>
+    </div>
+  </main>
+
+  <button class="mobile-filter-btn icon-btn" id="openFilter" aria-haspopup="dialog">Filter</button>
+  <div class="filter-drawer" id="filterDrawer" role="dialog" aria-modal="true" aria-hidden="true">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
+      <strong style="color:var(--accent)">Filter</strong>
+      <button class="icon-btn" id="closeFilter">✕</button>
+    </div>
+    <div style="color:var(--muted);margin-bottom:8px">Kategori</div>
+    <div id="mobileCategoryList"></div>
+    <div style="margin-top:12px;color:var(--muted);font-size:13px">Harga (maks)</div>
+    <input type="range" id="priceRangeMobile" min="0" max="100000" step="1000" value="100000" />
+    <div style="font-size:13px;color:var(--muted);margin-top:6px">Rp <span id="priceRangeValMobile">100000</span></div>
+    <div style="margin-top:12px;display:flex;gap:8px"><button class="btn-primary" id="applyFilterMobile">Terapkan</button><button class="btn-ghost" id="resetFilterMobile">Reset</button></div>
+  </div>
+
+  <div class="cart-bar" id="cartBar" role="button" aria-label="Buka keranjang">
+    <div style="display:flex;align-items:center;gap:10px">
+      <div style="font-weight:700">Keranjang</div>
+      <div class="cart-count" id="cartCount">0</div>
+    </div>
+  </div>
+
+  <aside class="cart-sidebar" id="cartSidebar" aria-hidden="true">
+    <h3 style="margin-top:0;color:var(--accent)">Keranjang Anda</h3>
+    <div id="cartItems"></div>
+    <div style="margin-top:12px;display:flex;align-items:center;justify-content:space-between">
+      <div style="color:var(--muted)">Total</div>
+      <div style="font-weight:700" id="cartTotal">Rp0</div>
+    </div>
+    <div class="cart-actions">
+      <!-- Tombol checkout ini akan membuka modal checkout baru -->
+      <button class="checkout-btn" id="btnCheckout">Checkout via WhatsApp</button>
+      <button class="clear-btn" id="btnClearCart">Kosongkan</button>
+    </div>
+  </aside>
+
+  <!-- Modal product detail -->
+  <div class="modal-overlay" id="modalOverlay">
+    <div class="modal" role="dialog" aria-modal="true">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
+        <h3 id="modalTitle">Produk</h3>
+        <button class="icon-btn" id="closeModal">✕</button>
+      </div>
+      <div class="row">
+        <div class="thumb" id="modalThumb" role="img" aria-label="Gambar produk"></div>
+        <div class="info">
+          <div style="display:flex;align-items:center;justify-content:space-between">
+            <div>
+              <h3 id="modalName"></h3>
+              <div id="modalCategory" style="color:var(--muted);font-size:13px"></div>
+            </div>
+            <div style="text-align:right">
+              <div style="font-weight:700" id="modalPrice">Rp0</div>
+              <div style="font-size:12px;color:var(--muted)">belum termasuk biaya admin</div>
+            </div>
+          </div>
+
+          <p id="modalDesc" style="color:var(--muted);margin-top:12px"></p>
+
+          <div style="margin-top:12px;display:flex;gap:8px;align-items:center">
+            <label for="modalQuantity" style="font-size:13px;color:var(--muted)">Jumlah</label>
+            <input id="modalQuantity" type="number" min="1" value="1" style="width:80px;padding:8px;border-radius:8px;border:none;background:#2a2a2a;color:#fff" />
+            <button class="add" id="modalAdd">Tambah ke Keranjang</button>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 
   <footer>
-    &copy; 2025 UrbanDriveStore. Semua Hak Dilindungi.
+    <div class="container">
+      <div style="display:flex;justify-content:space-between;gap:12px;align-items:center;flex-wrap:wrap">
+        <div>
+          <div style="color:var(--accent);font-weight:700">UrbanDriveStore</div>
+          <div style="color:var(--muted);font-size:13px">Contact: 0851-8328-3404 (WhatsApp)</div>
+        </div>
+        <div style="color:var(--muted);font-size:13px">© 2025 UrbanDriveStore. All rights reserved.</div>
+      </div>
+    </div>
   </footer>
 
-  <!-- Modal Tutorial -->
-  <div class="modal-overlay" id="tutorialModal" aria-hidden="true">
-    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle" id="modalContent">
-      <h3 id="modalTitle">Cara Membuat Gamepass</h3>
-      <p class="info" id="modalInfo">Tutorial pembuatan gamepass untuk nominal yang dipilih.</p>
-      <iframe id="modalVideo" src="" allowfullscreen title="Video tutorial membuat gamepass"></iframe>
-      <div>
-        <button class="btn-primary" id="btnCreate">Buat Gamepass</button>
-        <button class="btn-secondary" id="btnDone">Sudah Buat Gamepass</button>
-        <button class="btn-secondary" id="btnClose">Kembali</button>
-      </div>
-      <div class="small-note">Catatan: Harga di Roblox ditampilkan dalam R$ (Robux). Pastikan kamu membuat Gamepass dengan harga yang sesuai dan matikan regional pricing agar bisa melanjutkan transaksi.</div>
+
+<!-- Checkout Modal -->
+<div id="checkoutModal" class="checkout-modal">
+  <div class="checkout-content">
+    <h2>Form Checkout</h2>
+    <label for="checkoutUsername">Username Roblox <span style="color:red">*</span></label>
+    <input type="text" id="checkoutUsername" placeholder="Masukkan username Roblox" required>
+    <span class='error-msg' id='errUsername'>Harap isi Username Roblox</span>
+
+    <label for="checkoutPhone">Nomor WhatsApp <span style="color:red">*</span></label>
+    <input type="tel" id="checkoutPhone" placeholder="08xxxxxxxxxx" required>
+    <span class='error-msg' id='errPhone'>Harap isi Nomor WhatsApp</span>
+
+    <label for="checkoutPayment">Metode Pembayaran <span style="color:red">*</span></label>
+    <select id="checkoutPayment" required>
+      <option value="">-- Pilih Metode Pembayaran --</option>
+      <option value="Dana">Dana</option>
+      <option value="OVO">OVO</option>
+      <option value="GoPay">GoPay</option>
+      <option value="QRIS">QRIS</option>
+           <option value="Mandiri">Mandiri</option>
+    </select>
+    <span class='error-msg' id='errPayment'>Harap pilih metode pembayaran</span>
+
+    <label for="checkoutNote">Catatan</label>
+    <textarea id="checkoutNote" placeholder="Catatan tambahan (opsional)"></textarea>
+
+    <div class="checkout-actions">
+        <div id="checkoutTotals" style="margin-top:15px; font-size:0.9rem; background:#f9f9f9; padding:10px; border-radius:8px;">
+            <div>Subtotal: <span id="subtotalDisplay">Rp0</span></div>
+            <div>Biaya Admin: <span id="adminFeeDisplay">Rp0</span></div>
+            <div><strong>Total: <span id="totalDisplay">Rp0</span></strong></div>
+        </div>
+
+      <button id="checkoutCancel">Batal</button>
+      <button id="checkoutSubmit">Kirim</button>
     </div>
   </div>
+</div>
 
-  <script>
-    // Elements
-    const gamepassSelect = document.getElementById('gamepass');
-    const pembayaranSelect = document.getElementById('pembayaran');
-    const hargaPreview = document.getElementById('harga-preview');
-    const totalHarga = document.getElementById('total-harga');
+<script>
+(function(){
+  const PRODUCTS = [
+    {id:1,name:'Luxury Car',price:36260,category:'Gamepass',img:'/assets/luxury-car.jpg',alt:'Luxury Car',desc:'Gamepass membuka mobil mewah di CDID.'},
+    {id:2,name:'Rare Imports',price:26460,category:'Gamepass',img:'/assets/rare-imports.jpg',alt:'Rare Imports',desc:'Akses ke mobil impor langka dan eksklusif.'},
+    {id:3,name:'Retro Car',price:23660,category:'Gamepass',img:'/assets/retro-car.jpg',alt:'Retro Car',desc:'Koleksi mobil retro klasik yang unik.'},
+    {id:4,name:'Emergency Vehicle',price:19460,category:'Gamepass',img:'/assets/ambulance.jpg',alt:'Emergency Vehicle',desc:'Akses kendaraan darurat eksklusif.'},
+    {id:5,name:'Additional Ownable Car',price:13860,category:'Gamepass',img:'/assets/car-key.jpg',alt:'Additional car slot',desc:'Slot mobil tambahan +1.'},
+    {id:6,name:'2x Additional Ownable Car',price:37660,category:'Gamepass',img:'/assets/car-key.jpg',alt:'2 additional car slots',desc:'Dua slot mobil tambahan (+2).'},
+    {id:7,name:'Paycheck Booster (2x)',price:55860,category:'Gamepass',img:'/assets/money.jpg',alt:'Double Paycheck',desc:'Dapatkan gaji dua kali lipat.'},
+    {id:8,name:'+50% Job Earning',price:55860,category:'Gamepass',img:'/assets/money.jpg',alt:'+50% Job Earning',desc:'Pendapatan kerja meningkat +50%.'},
+    {id:9,name:'Luxury House',price:11060,category:'Gamepass',img:'/assets/luxury-house.jpg',alt:'Luxury House',desc:'Akses ke rumah mewah eksklusif.'},
+    {id:10,name:'Advanced Modification',price:34860,category:'Gamepass',img:'/assets/tuning.jpg',alt:'Advanced Modification',desc:'Opsi modifikasi lanjutan untuk kendaraan.'}
+  ,
+  { id: 11, name: '50 Robux', price: 7000, category: 'Robux', desc: 'Pembelian 50 Robux.' , img: 'https://upload.wikimedia.org/wikipedia/commons/c/c7/Robux_2019_Logo_gold.svg'},
+  { id: 12, name: '100 Robux', price: 14000, category: 'Robux', desc: 'Pembelian 100 Robux.' , img: 'https://upload.wikimedia.org/wikipedia/commons/c/c7/Robux_2019_Logo_gold.svg'},
+  { id: 13, name: '150 Robux', price: 21000, category: 'Robux', desc: 'Pembelian 150 Robux.' , img: 'https://upload.wikimedia.org/wikipedia/commons/c/c7/Robux_2019_Logo_gold.svg'},
+  { id: 14, name: '200 Robux', price: 28000, category: 'Robux', desc: 'Pembelian 200 Robux.' , img: 'https://upload.wikimedia.org/wikipedia/commons/c/c7/Robux_2019_Logo_gold.svg'},
+  { id: 15, name: '250 Robux', price: 35000, category: 'Robux', desc: 'Pembelian 250 Robux.' , img: 'https://upload.wikimedia.org/wikipedia/commons/c/c7/Robux_2019_Logo_gold.svg'},
+  { id: 16, name: '300 Robux', price: 42000, category: 'Robux', desc: 'Pembelian 300 Robux.' , img: 'https://upload.wikimedia.org/wikipedia/commons/c/c7/Robux_2019_Logo_gold.svg'},
+  { id: 17, name: '350 Robux', price: 49000, category: 'Robux', desc: 'Pembelian 350 Robux.' , img: 'https://upload.wikimedia.org/wikipedia/commons/c/c7/Robux_2019_Logo_gold.svg'},
+  { id: 18, name: '400 Robux', price: 56000, category: 'Robux', desc: 'Pembelian 400 Robux.' , img: 'https://upload.wikimedia.org/wikipedia/commons/c/c7/Robux_2019_Logo_gold.svg'},
+  { id: 19, name: '450 Robux', price: 63000, category: 'Robux', desc: 'Pembelian 450 Robux.' , img: 'https://upload.wikimedia.org/wikipedia/commons/c/c7/Robux_2019_Logo_gold.svg'}
+];
 
-    // Update harga preview berdasarkan pilihan
-    function updateHarga() {
-      const harga = parseInt(gamepassSelect.value);
-      let biayaAdmin = 1000;
-      if (pembayaranSelect.value === 'Bank BRI') biayaAdmin = 4000;
-      else if (pembayaranSelect.value === 'Bank Mandiri') biayaAdmin = 2500;
-      const total = harga + biayaAdmin;
-      if (!isNaN(harga)) {
-        hargaPreview.textContent = `Harga: Rp${harga.toLocaleString('id-ID')}`;
-        totalHarga.textContent = `Total: Rp${total.toLocaleString('id-ID')} (termasuk biaya admin Rp${biayaAdmin.toLocaleString('id-ID')})`;
-      } else {
-        hargaPreview.textContent = 'Harga: -';
-        totalHarga.textContent = 'Total: -';
+  const CART_KEY = 'uds_cart_v1';
+  let state = { cat: 'All', maxPrice: 100000, query: '', sort: 'relevance', cart: [] };
+
+  // Nomor WhatsApp penjual (didefinisikan di satu tempat)
+  const SELLER_WA_NUMBER = '6285183283404';
+
+  const $ = s => document.querySelector(s);
+  const catalog = $('#catalog');
+  const productCount = $('#productCount');
+  const categoryList = $('#categoryList');
+  const priceRange = $('#priceRange');
+  const priceRangeVal = $('#priceRangeVal');
+  const searchInput = $('#searchInput');
+  const cartCount = $('#cartCount');
+  const cartSidebar = $('#cartSidebar');
+  const cartItemsEl = $('#cartItems');
+  const cartTotalEl = $('#cartTotal');
+  const cartBar = $('#cartBar');
+  const cartBadge = $('#cartBadge');
+  const modalOverlay = $('#modalOverlay');
+  const modalTitle = $('#modalTitle');
+  const modalThumb = $('#modalThumb');
+  const modalName = $('#modalName');
+  const modalPrice = $('#modalPrice');
+  const modalDesc = $('#modalDesc');
+  const modalCategory = $('#modalCategory');
+  const modalQuantity = $('#modalQuantity');
+  const modalAdd = $('#modalAdd');
+  const closeModalBtn = $('#closeModal');
+  const mobileFilterBtn = $('#openFilter');
+  const filterDrawer = $('#filterDrawer');
+  const closeFilter = $('#closeFilter');
+  const mobileCategoryList = $('#mobileCategoryList');
+  const priceRangeMobile = $('#priceRangeMobile');
+  const priceRangeValMobile = $('#priceRangeValMobile');
+  const applyFilterMobile = $('#applyFilterMobile');
+  const resetFilterMobile = $('#resetFilterMobile');
+  const sortSelect = $('#sortSelect');
+  const btnShopNow = $('#btnShopNow');
+  const btnHow = $('#btnHow');
+  const btnCartSmall = $('#btnCartSmall');
+  const btnClearCart = $('#btnClearCart');
+  const btnCheckout = $('#btnCheckout'); // Tombol checkout di sidebar keranjang
+
+  // Elemen-elemen untuk Checkout Modal
+  const checkoutModal = document.getElementById('checkoutModal');
+  const checkoutCancel = document.getElementById('checkoutCancel');
+  const checkoutSubmit = document.getElementById('checkoutSubmit');
+  const checkoutUsernameInput = document.getElementById('checkoutUsername');
+  const checkoutPhoneInput = document.getElementById('checkoutPhone');
+  const checkoutPaymentSelect = document.getElementById('checkoutPayment');
+  const checkoutNoteInput = document.getElementById('checkoutNote');
+  const subtotalDisplay = document.getElementById('subtotalDisplay');
+  const adminFeeDisplay = document.getElementById('adminFeeDisplay');
+  const totalDisplay = document.getElementById('totalDisplay');
+
+  // Pesan Error
+  const errUsername = document.getElementById('errUsername');
+  const errPhone = document.getElementById('errPhone');
+  const errPayment = document.getElementById('errPayment');
+
+
+  try { const saved = localStorage.getItem(CART_KEY); state.cart = saved ? JSON.parse(saved) : []; } catch(e){ state.cart = []; }
+
+  function saveCart(){ try{ localStorage.setItem(CART_KEY, JSON.stringify(state.cart)); }catch(e){} }
+  function debounce(fn, ms=300){ let t; return (...a)=>{ clearTimeout(t); t=setTimeout(()=>fn.apply(this,a), ms); }; }
+  function sumQty(){ return state.cart.reduce((s,c)=>s + (c.qty||0), 0); }
+
+  function renderCategories(){
+    if(!categoryList) return;
+    const cats = ['All', ...Array.from(new Set(PRODUCTS.map(p=>p.category)))];
+    categoryList.innerHTML = '';
+    if(mobileCategoryList) mobileCategoryList.innerHTML = '';
+    cats.forEach(c=>{
+      const el = document.createElement('div');
+      el.className = 'category' + (state.cat===c ? ' active' : '');
+      el.tabIndex = 0; el.textContent = c;
+      el.addEventListener('click', ()=>{ state.cat = c; document.querySelectorAll('.category').forEach(x=>x.classList.remove('active')); el.classList.add('active'); renderCatalog(); });
+      categoryList.appendChild(el);
+      if(mobileCategoryList){
+        const mel = el.cloneNode(true);
+        mel.addEventListener('click', ()=>{ state.cat = c; closeFilterDrawer(); renderCatalog(); });
+        mobileCategoryList.appendChild(mel);
       }
-    }
+    });
+  }
 
-    // Kirim pesan WhatsApp
-    function kirimPesanWhatsApp(event) {
-      event.preventDefault();
-      const username = document.getElementById('username').value.trim();
-      const whatsapp = document.getElementById('whatsapp').value.trim();
-      const harga = parseInt(gamepassSelect.value);
-      const pembayaran = pembayaranSelect.value;
-      const catatan = document.getElementById('catatan').value.trim();
+  function renderCatalog(){
+    if(!catalog) return;
+    let items = PRODUCTS.slice();
+    items = items.filter(p => p.price <= (state.maxPrice || 99999999));
+    if(state.cat && state.cat !== 'All') items = items.filter(p => p.category === state.cat);
+    if(state.query){ const q = state.query.toLowerCase(); items = items.filter(p => (p.name + ' ' + (p.desc||'') + ' ' + (p.category||'')).toLowerCase().includes(q)); }
+    if(state.sort === 'price_asc') items.sort((a,b)=>a.price-b.price);
+    if(state.sort === 'price_desc') items.sort((a,b)=>b.price-a.price);
 
-      let biayaAdmin = 1000;
-      if (pembayaran === 'Bank BRI') biayaAdmin = 4000;
-      else if (pembayaran === 'Bank Mandiri') biayaAdmin = 2500;
+    catalog.innerHTML = '';
+    items.forEach(p=>{
+      const card = document.createElement('div'); card.className = 'product';
+      const thumb = document.createElement('div'); thumb.className='thumb';
+      if(p.img){ thumb.style.backgroundImage = `url('${p.img}')`; } else { thumb.style.background = 'linear-gradient(135deg,#ffcc00,#ff8a00)'; thumb.textContent='🚗'; thumb.style.display='flex'; thumb.style.alignItems='center'; thumb.style.justifyContent='center'; thumb.style.fontSize='32px'; }
+      card.appendChild(thumb);
 
-      const total = harga + biayaAdmin;
-      const gamepassText = gamepassSelect.options[gamepassSelect.selectedIndex].text;
-      const pesan = `Gamepass Yang Dipesan: *${gamepassText}*
-Username Roblox: ${username}
-Metode Pembayaran: ${pembayaran}
-Total: Rp${total.toLocaleString('id-ID')} (termasuk biaya admin Rp${biayaAdmin.toLocaleString('id-ID')})
-Nomor WhatsApp: ${whatsapp}
-Catatan: ${catatan}`;
-      const url = `https://wa.me/6285183283404?text=${encodeURIComponent(pesan)}`;
-      document.getElementById('loading').style.display = 'block';
-      window.open(url, '_blank');
-      setTimeout(() => document.getElementById('loading').style.display = 'none', 1500);
-    }
-
-    function resetForm() {
-      document.getElementById('orderForm').reset();
-      hargaPreview.textContent = 'Harga: -';
-      totalHarga.textContent = 'Total: -';
-    }
-
-    gamepassSelect.addEventListener('change', updateHarga);
-    pembayaranSelect.addEventListener('change', updateHarga);
-
-    document.querySelectorAll('.faq-question').forEach(button => {
-      button.addEventListener('click', () => {
-        button.classList.toggle('active');
+      const body = document.createElement('div'); body.className = 'body';
+      const h4 = document.createElement('h4'); h4.textContent = p.name; body.appendChild(h4);
+      const pEl = document.createElement('p'); pEl.textContent = p.desc || ''; body.appendChild(pEl);
+      const priceRow = document.createElement('div'); priceRow.className = 'price-row';
+      const price = document.createElement('div'); price.className='price'; price.textContent = 'Rp' + p.price.toLocaleString('id-ID');
+      const addWrap = document.createElement('div');
+      const btn = document.createElement('button'); btn.className='add'; btn.textContent='Tambah'; btn.setAttribute('data-id', p.id);
+      // Pastikan event listener ini memanggil openModal dengan produk yang benar
+      btn.addEventListener('click', (event) => {
+          event.stopPropagation(); // Mencegah event menyebar ke elemen lain jika ada
+          openModal(p);
       });
+      addWrap.appendChild(btn);
+      priceRow.appendChild(price); priceRow.appendChild(addWrap);
+      body.appendChild(priceRow);
+      card.appendChild(body);
+      catalog.appendChild(card);
     });
+    if(productCount) productCount.textContent = items.length;
+  }
 
-    // Mapping harga gamepass Roblox (konversi)
-    const hargaGamepassRoblox = {
-      "50": "72 R$",
-      "100": "143 R$",
-      "150": "215 R$",
-      "200": "286 R$",
-      "250": "358 R$",
-      "300": "429 R$",
-      "350": "501 R$",
-      "400": "572 R$",
-      "450": "643 R$"
-    };
-
-    // Popup Tutorial
-    const modalOverlay = document.getElementById('tutorialModal');
-    const modalContent = document.getElementById('modalContent');
-    const modalTitle = document.getElementById('modalTitle');
-    const modalInfo = document.getElementById('modalInfo');
-    const modalVideo = document.getElementById('modalVideo');
-    const btnClose = document.getElementById('btnClose');
-    const btnCreate = document.getElementById('btnCreate');
-    const btnDone = document.getElementById('btnDone');
-
-    // Helper: ambil angka Robux dari teks option, misal "50 Robux - Rp7.000" -> "50"
-    function extractRobuxAmount(optionText) {
-      const match = optionText.match(/^(\d{1,3})\s*Robux/);
-      if (match) return match[1];
-      // fallback: coba ambil angka pertama
-      const m2 = optionText.match(/(\d{1,3})/);
-      return m2 ? m2[1] : null;
+  let currentModalProduct = null;
+  function openModal(product){
+    if(!modalOverlay) return;
+    currentModalProduct = product; // Pastikan produk disimpan di sini
+    console.log('Opening modal for product:', currentModalProduct); // Debugging
+    if(modalTitle) modalTitle.textContent = product.name;
+    if(modalThumb){
+        if(product.img) modalThumb.style.backgroundImage = `url('${product.img}')`;
+        else {
+            modalThumb.style.background = 'linear-gradient(135deg,#ffcc00,#ff8a00)';
+            modalThumb.textContent='🚗';
+            modalThumb.style.display='flex';
+            modalThumb.style.alignItems='center';
+            modalThumb.style.justifyContent='center';
+            modalThumb.style.fontSize='32px';
+        }
+        modalThumb.setAttribute('aria-label', product.alt || product.name);
     }
+    if(modalName) modalName.textContent = product.name;
+    if(modalPrice) modalPrice.textContent = 'Rp' + product.price.toLocaleString('id-ID');
+    if(modalDesc) modalDesc.textContent = product.desc || '';
+    if(modalCategory) modalCategory.textContent = product.category || '';
+    if(modalQuantity) modalQuantity.value = 1; // Reset quantity to 1
+    modalOverlay.style.display = 'flex';
+  }
+  function closeModal(){ if(modalOverlay) modalOverlay.style.display = 'none'; currentModalProduct = null; }
 
-    document.getElementById('faq-gamepass').addEventListener('click', () => {
-      const selectedOption = gamepassSelect.selectedOptions[0];
-      if (!selectedOption || selectedOption.disabled) {
-        alert("Silakan pilih produk Robux di form terlebih dahulu.");
+  function renderCart(){
+    if(!cartItemsEl) return;
+    cartItemsEl.innerHTML = '';
+    if(!state.cart || state.cart.length === 0){ cartItemsEl.innerHTML = '<div style="color:var(--muted);padding:12px">Keranjang kosong</div>'; }
+    state.cart.forEach(item => {
+      const p = PRODUCTS.find(x=>x.id === item.id);
+      if(!p) return;
+      const el = document.createElement('div'); el.className = 'cart-item';
+      const imgSrc = p.img ? p.img : '/assets/fallback.jpg';
+      el.innerHTML = '<img src="' + imgSrc + '" alt="' + (p.alt||'') + '" onerror="this.src=\'/assets/fallback.jpg\'"/>' +
+                     '<div style="flex:1"><div style="font-weight:700">' + p.name + '</div><div style="color:var(--muted);font-size:13px">Rp' + p.price.toLocaleString('id-ID') + ' x ' + item.qty + '</div></div>' +
+                     '<div style="display:flex;flex-direction:column;gap:6px;align-items:flex-end"><button class="icon-btn" data-action="inc" data-id="' + item.id + '" aria-label="Tambah jumlah">+</button><button class="icon-btn" data-action="dec" data-id="' + item.id + '" aria-label="Kurangi jumlah">-</button></div>';
+      cartItemsEl.appendChild(el);
+    });
+    cartItemsEl.querySelectorAll('button').forEach(btn=>{ btn.addEventListener('click', ()=>{ const id = Number(btn.getAttribute('data-id')); const action = btn.getAttribute('data-action'); if(action==='inc') changeQty(id,1); else changeQty(id,-1); }); });
+    const total = state.cart.reduce((s,i)=>{ const p = PRODUCTS.find(x=>x.id===i.id); return s + (p ? p.price * i.qty : 0); }, 0);
+    if(cartTotalEl) cartTotalEl.textContent = 'Rp' + total.toLocaleString('id-ID');
+    const qtySum = sumQty();
+    if(cartCount) cartCount.textContent = qtySum;
+    if(cartBadge) cartBadge.textContent = qtySum;
+    saveCart();
+  }
+
+  function changeQty(id,delta){ const idx = state.cart.findIndex(c=>c.id === id); if(idx === -1) return; state.cart[idx].qty += delta; if(state.cart[idx].qty <= 0) state.cart.splice(idx,1); renderCart(); }
+  function addToCart(product, qty=1){
+      console.log('Adding to cart:', product, 'Quantity:', qty); // Debugging
+      if (!product || !product.id) {
+          console.error('Product is invalid or missing ID:', product);
+          showFeedback('Gagal menambahkan produk. Produk tidak valid.');
+          return;
+      }
+      const exists = state.cart.find(c=>c.id === product.id);
+      if(exists) {
+          exists.qty += qty;
+      } else {
+          state.cart.push({ id: product.id, qty });
+      }
+      renderCart();
+      closeModal();
+      showFeedback('Berhasil ditambahkan ke keranjang!');
+  }
+
+  function toggleCart(){ if(!cartSidebar) return; if(cartSidebar.style.display === 'block'){ cartSidebar.style.display = 'none'; cartSidebar.setAttribute('aria-hidden','true'); } else { cartSidebar.style.display = 'block'; cartSidebar.setAttribute('aria-hidden','false'); } }
+  function clearCart(){ if(confirm('Kosongkan keranjang?')){ state.cart = []; renderCart(); showFeedback('Keranjang dikosongkan.'); } }
+  function showFeedback(msg){ const el = document.createElement('div'); el.style.position='fixed'; el.style.right='18px'; el.style.bottom='90px'; el.style.background='var(--success)'; el.style.color='#000'; el.style.padding='10px 14px'; el.style.borderRadius='10px'; el.style.fontWeight='700'; el.style.zIndex='9999'; el.textContent = msg; document.body.appendChild(el); setTimeout(()=>el.remove(),1400); }
+
+  function startTestimonialSlider(){ /* Dihapus karena bagian testimoni diganti */ } // Fungsi ini tidak lagi diperlukan
+  function openFilterDrawer(){ if(!filterDrawer) return; filterDrawer.style.display='block'; filterDrawer.setAttribute('aria-hidden','false'); }
+  function closeFilterDrawer(){ if(!filterDrawer) return; filterDrawer.style.display='none'; filterDrawer.setAttribute('aria-hidden','true'); }
+  function showHow(){ const msg = 'Cara Order:\n1) Pilih produk.\n2) Tambah ke keranjang.\n3) Checkout via WhatsApp.\nPastikan kirim username & nomor WA yang benar.'; alert(msg); }
+
+  // --- Fungsi untuk Checkout Modal ---
+  function openCheckoutForm(){
+    if(!checkoutModal) return;
+    if(!state.cart || state.cart.length === 0){
+        showFeedback('Keranjang Anda kosong. Silakan tambahkan produk terlebih dahulu.');
         return;
-      }
-      const productText = selectedOption.text; // e.g. "50 Robux - Rp7.000"
-      const robuxAmount = extractRobuxAmount(productText);
-      let judul = `Cara Membuat Gamepass untuk ${productText}`;
-      let infoText = 'Tutorial pembuatan Gamepass untuk nominal yang dipilih.';
-      if (robuxAmount && hargaGamepassRoblox[robuxAmount]) {
-        infoText = `Harga Gamepass di Roblox: ${hargaGamepassRoblox[robuxAmount]} (untuk ${robuxAmount} Robux)`;
-        judul = `Cara Membuat Gamepass untuk ${robuxAmount} Robux (${hargaGamepassRoblox[robuxAmount]} di Roblox)`;
-      }
-      modalTitle.textContent = judul;
-      modalInfo.textContent = infoText;
-      modalVideo.src = 'https://www.youtube.com/embed/2raxL-VgRWM';
-      modalOverlay.style.display = 'flex';
-      modalOverlay.setAttribute('aria-hidden', 'false');
+    }
+    // Reset form dan pesan error setiap kali modal dibuka
+    checkoutUsernameInput.value = '';
+    checkoutPhoneInput.value = '';
+    checkoutPaymentSelect.value = '';
+    checkoutNoteInput.value = '';
+    document.querySelectorAll('.error-msg').forEach(e => e.style.display = 'none');
+
+    updateCheckoutTotals(); // Perbarui total saat modal dibuka
+    checkoutModal.style.display = 'flex';
+  }
+
+  function closeCheckoutForm(){
+    if(checkoutModal) checkoutModal.style.display = 'none';
+  }
+
+  function updateCheckoutTotals(){
+    let subtotal = 0;
+    state.cart.forEach(item=>{ // Mengakses state.cart yang benar
+        const p = PRODUCTS.find(x=>x.id === item.id); // Mengakses PRODUCTS yang benar
+        if(p) subtotal += p.price * item.qty;
     });
 
-    function closeModal() {
-      modalOverlay.style.display = 'none';
-      modalOverlay.setAttribute('aria-hidden', 'true');
-      modalVideo.src = '';
+    let paymentMethod = checkoutPaymentSelect.value;
+    let adminFee = 0;
+    if(['Dana','OVO','GoPay'].includes(paymentMethod)) adminFee = 1000; // QRIS tidak ada di opsi select
+    else if(paymentMethod === 'Mandiri') adminFee = 2500; // Tambahkan Mandiri jika ada di select
+
+    subtotalDisplay.textContent = 'Rp' + subtotal.toLocaleString('id-ID');
+    adminFeeDisplay.textContent = 'Rp' + adminFee.toLocaleString('id-ID');
+    totalDisplay.textContent = 'Rp' + (subtotal + adminFee).toLocaleString('id-ID');
+
+    return {subtotal, adminFee, total: subtotal + adminFee};
+  }
+
+  function bindUI(){
+    if(priceRange) priceRange.addEventListener('input', ()=>{ state.maxPrice = Number(priceRange.value); if(priceRangeVal) priceRangeVal.textContent = priceRange.value; renderCatalog(); });
+    if(priceRangeMobile) priceRangeMobile.addEventListener('input', ()=>{ if(priceRangeValMobile) priceRangeValMobile.textContent = priceRangeMobile.value; });
+    if(searchInput) searchInput.addEventListener('input', debounce((e)=>{ state.query = e.target.value.toLowerCase(); renderCatalog(); }, 300));
+    if(btnShopNow) btnShopNow.addEventListener('click', ()=>{ const el = document.querySelector('.catalog'); if(el) window.scrollTo({ top: el.offsetTop - 80, behavior: 'smooth' }); });
+    if(btnHow) btnHow.addEventListener('click', showHow);
+    if(btnCartSmall) btnCartSmall.addEventListener('click', toggleCart);
+    if(cartBar) cartBar.addEventListener('click', toggleCart);
+    if(btnClearCart) btnClearCart.addEventListener('click', clearCart);
+
+    // Mengganti event listener btnCheckout lama dengan yang baru untuk membuka modal
+    if(btnCheckout) {
+        // btnCheckout.removeEventListener('click', checkoutWhatsApp); // Hapus listener lama jika ada
+        btnCheckout.addEventListener('click', openCheckoutForm);
     }
 
-    btnClose.onclick = closeModal;
-    btnDone.onclick = closeModal;
-    btnCreate.onclick = () => {
-      // arahkan ke Roblox Create > Developers (buka tab baru)
-      window.open('https://www.roblox.com/develop', '_blank');
-    };
+    if(sortSelect) sortSelect.addEventListener('change', (e)=>{ state.sort = e.target.value; renderCatalog(); });
+    if(closeModalBtn) closeModalBtn.addEventListener('click', closeModal);
+    // Pastikan modalAdd terhubung dengan benar dan memanggil addToCart
+    if(modalAdd) {
+        modalAdd.addEventListener('click', ()=>{
+            if(currentModalProduct) {
+                const qty = Number(modalQuantity.value || 1);
+                if (qty > 0) {
+                    addToCart(currentModalProduct, qty);
+                } else {
+                    showFeedback('Jumlah produk harus lebih dari 0.');
+                }
+            } else {
+                console.error('currentModalProduct is null when trying to add to cart.');
+                showFeedback('Terjadi kesalahan, produk tidak ditemukan.');
+            }
+        });
+    }
+    window.addEventListener('click', (e)=>{ if(e.target === modalOverlay) closeModal(); });
+    if(mobileFilterBtn) mobileFilterBtn.addEventListener('click', openFilterDrawer);
+    if(closeFilter) closeFilter.addEventListener('click', closeFilterDrawer); // Perbaikan: closeFilterDrawer()
+    if(applyFilterMobile) applyFilterMobile.addEventListener('click', ()=>{ state.maxPrice = Number(priceRangeMobile.value); if(priceRange) priceRange.value = priceRangeMobile.value; if(priceRangeVal) priceRangeVal.textContent = priceRangeMobile.value; closeFilterDrawer(); renderCatalog(); });
+    if(resetFilterMobile) resetFilterMobile.addEventListener('click', ()=>{ if(priceRangeMobile) priceRangeMobile.value = 100000; if(priceRangeValMobile) priceRangeValMobile.textContent = '100000'; });
+    document.addEventListener('keydown', (e)=>{ if(e.key === 'Escape'){ closeModal(); closeFilterDrawer(); closeCheckoutForm(); } }); // Tambah closeCheckoutForm
 
-    // Tutup saat klik di luar modalContent
-    modalOverlay.addEventListener('click', (e) => {
-      if (e.target === modalOverlay) closeModal();
+    // Event listeners untuk Checkout Modal
+    if(checkoutCancel) checkoutCancel.addEventListener('click', closeCheckoutForm);
+    window.addEventListener('click', function(e){ // Tutup modal jika klik di luar
+        if(e.target === checkoutModal){
+            closeCheckoutForm();
+        }
     });
 
-    // Keyboard: Escape untuk tutup modal
-    document.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape' && modalOverlay.style.display === 'flex') closeModal();
-    });
+    // Update total saat metode pembayaran berubah
+    if(checkoutPaymentSelect) checkoutPaymentSelect.addEventListener('change', updateCheckoutTotals);
 
-  </script>
+    // Reset pesan error saat input berubah
+    if(checkoutUsernameInput) checkoutUsernameInput.addEventListener('input', () => { errUsername.style.display = 'none'; });
+    if(checkoutPhoneInput) checkoutPhoneInput.addEventListener('input', () => { errPhone.style.display = 'none'; });
+    if(checkoutPaymentSelect) checkoutPaymentSelect.addEventListener('change', () => { errPayment.style.display = 'none'; });
+
+
+    // Submit handler untuk Checkout Modal
+    if(checkoutSubmit){
+        checkoutSubmit.addEventListener('click', function(){
+            const username = checkoutUsernameInput.value.trim();
+            const phone = checkoutPhoneInput.value.trim();
+            const payment = checkoutPaymentSelect.value.trim();
+            const note = checkoutNoteInput.value.trim();
+
+            // Reset errors
+            document.querySelectorAll('.error-msg').forEach(e => e.style.display = 'none');
+            let valid = true;
+
+            if(!username){
+                errUsername.style.display = 'block';
+                valid = false;
+            }
+            // Validasi nomor WhatsApp dengan regex
+            const phoneRegex = /^(08|\+628)[0-9]{7,11}$/; // Contoh regex untuk nomor Indonesia
+            if(!phone || !phoneRegex.test(phone)){
+                errPhone.textContent = 'Harap isi Nomor WhatsApp yang valid (cth: 081234567890)';
+                errPhone.style.display = 'block';
+                valid = false;
+            }
+            if(!payment){
+                errPayment.style.display = 'block';
+                valid = false;
+            }
+
+            if(!valid) return; // Hentikan jika ada validasi yang gagal
+
+            if(!state.cart || state.cart.length === 0){
+                showFeedback('Keranjang kosong. Tidak dapat melanjutkan checkout.');
+                closeCheckoutForm();
+                return;
+            }
+
+            const totals = updateCheckoutTotals(); // Dapatkan total terbaru
+
+            let orderText = 'Pesanan dari UrbanDriveStore:%0A';
+            orderText += 'Username Roblox: ' + username + '%0A';
+            orderText += 'Nomor WA: ' + phone + '%0A';
+            orderText += 'Metode Pembayaran: ' + payment + '%0A';
+            if(note) orderText += 'Catatan: ' + note + '%0A';
+            orderText += '%0AOrder:%0A';
+
+            state.cart.forEach(item=>{
+                const p = PRODUCTS.find(x=>x.id === item.id);
+                if(p){
+                    const subtotalItem = p.price * item.qty;
+                    orderText += item.qty + 'x ' + p.name + ' — Rp' + subtotalItem.toLocaleString('id-ID') + '%0A';
+                }
+            });
+
+            orderText += '%0ASubtotal: Rp' + totals.subtotal.toLocaleString('id-ID');
+            orderText += '%0ABiaya Admin (' + payment + '): Rp' + totals.adminFee.toLocaleString('id-ID');
+            orderText += '%0ATotal: Rp' + totals.total.toLocaleString('id-ID');
+
+            // Kirim ke nomor WA penjual (SELLER_WA_NUMBER)
+            const waUrl = 'https://wa.me/' + SELLER_WA_NUMBER + '?text=' + encodeURIComponent(orderText);
+            window.open(waUrl, '_blank');
+
+            closeCheckoutForm();
+            clearCart(); // Kosongkan keranjang setelah pesanan dikirim
+            showFeedback('Pesanan Anda telah dikirim!');
+        });
+    }
+  }
+
+  function init(){
+    renderCategories();
+    renderCatalog();
+    bindUI();
+    renderCart();
+    // startTestimonialSlider(); // Dihapus karena bagian testimoni diganti
+  }
+  init();
+
+  // Ekspos PRODUCTS dan state ke global window._UDS agar bisa diakses oleh fungsi lain jika diperlukan
+  window._UDS = { PRODUCTS, state, renderCatalog, renderCart, addToCart, openModal, updateCheckoutTotals };
+})();
+</script>
 </body>
 </html>
