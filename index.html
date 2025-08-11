@@ -859,27 +859,20 @@
             }
 
             const totals = updateCheckoutTotals();
+            const bold = txt => `*${txt}*`;
 
-            let orderText = '*Pesanan dari UrbanDriveStore*%0A%0A';
-            orderText += '👤 *Username Roblox*: ' + username + '%0A';
-            orderText += '📱 *Nomor WA*: ' + phone + '%0A';
-            orderText += '💳 *Metode Pembayaran*: ' + payment + '%0A%0A';
-            orderText += '================%0A';
-            orderText += '🛒 *Order:*%0A';
-            state.cart.forEach(item => {
-                const p = PRODUCTS.find(x => x.id === item.id);
-                if (p) {
-                    const subtotalItem = p.price * item.qty;
-                    orderText += '• ' + item.qty + 'x ' + p.name + ' — Rp' + subtotalItem.toLocaleString('id-ID') + '%0A';
-                }
-            });
-            orderText += '================%0A';
-            orderText += '💰 *Subtotal*: Rp' + totals.subtotal.toLocaleString('id-ID') + '%0A';
-            orderText += '🏦 *Biaya Admin (' + payment + ')*: Rp' + totals.adminFee.toLocaleString('id-ID') + '%0A';
-            orderText += '💵 *Total*: Rp' + totals.total.toLocaleString('id-ID');
+            let firstItem = state.cart.length > 0 ? PRODUCTS.find(p => p.id === state.cart[0].id) : null;
+let productLine = firstItem ? `${bold(firstItem.name)} - Rp${firstItem.price.toLocaleString('id-ID')}` : '';
 
-            const waUrl = 'https://wa.me/' + SELLER_WA_NUMBER + '?text=' + encodeURIComponent(orderText);
-            window.open(waUrl, '_blank');
+let orderText = `PESANAN MASUK ${productLine}\n` +
+`Username Roblox: ${username}\n` +
+`Metode Pembayaran: ${payment}\n` +
+`Total: Rp${totals.total.toLocaleString('id-ID')} (termasuk biaya admin Rp${totals.adminFee.toLocaleString('id-ID')})\n` +
+`Nomor WhatsApp: ${phone}\n` +
+`Catatan: ${note || ''}`;
+
+const waUrl = 'https://wa.me/' + SELLER_WA_NUMBER + '?text=' + encodeURIComponent(orderText);
+window.open(waUrl, '_blank');
 
             closeCheckoutForm();
             clearCart(); // Kosongkan keranjang setelah pesanan dikirim
