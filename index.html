@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
+  <link rel="icon" href="https://raw.githubusercontent.com/abdulll-bit/gamepass_cdid/refs/heads/main/favicon.png" type="image/png">
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>UrbanDriveStore — Beli Robux & Gamepass CDID Aman & Cepat</title>
@@ -857,28 +858,26 @@
                 return;
             }
 
-            const totals = updateCheckoutTotals(); // Dapatkan total terbaru
+            const totals = updateCheckoutTotals();
 
-            let orderText = 'Pesanan dari UrbanDriveStore:%0A';
-            orderText += 'Username Roblox: ' + username + '%0A';
-            orderText += 'Nomor WA: ' + phone + '%0A';
-            orderText += 'Metode Pembayaran: ' + payment + '%0A';
-            if(note) orderText += 'Catatan: ' + note + '%0A';
-            orderText += '%0AOrder:%0A';
-
-            state.cart.forEach(item=>{
-                const p = PRODUCTS.find(x=>x.id === item.id);
-                if(p){
+            let orderText = '*Pesanan dari UrbanDriveStore*%0A%0A';
+            orderText += '👤 *Username Roblox*: ' + username + '%0A';
+            orderText += '📱 *Nomor WA*: ' + phone + '%0A';
+            orderText += '💳 *Metode Pembayaran*: ' + payment + '%0A%0A';
+            orderText += '================%0A';
+            orderText += '🛒 *Order:*%0A';
+            state.cart.forEach(item => {
+                const p = PRODUCTS.find(x => x.id === item.id);
+                if (p) {
                     const subtotalItem = p.price * item.qty;
-                    orderText += item.qty + 'x ' + p.name + ' — Rp' + subtotalItem.toLocaleString('id-ID') + '%0A';
+                    orderText += '• ' + item.qty + 'x ' + p.name + ' — Rp' + subtotalItem.toLocaleString('id-ID') + '%0A';
                 }
             });
+            orderText += '================%0A';
+            orderText += '💰 *Subtotal*: Rp' + totals.subtotal.toLocaleString('id-ID') + '%0A';
+            orderText += '🏦 *Biaya Admin (' + payment + ')*: Rp' + totals.adminFee.toLocaleString('id-ID') + '%0A';
+            orderText += '💵 *Total*: Rp' + totals.total.toLocaleString('id-ID');
 
-            orderText += '%0ASubtotal: Rp' + totals.subtotal.toLocaleString('id-ID');
-            orderText += '%0ABiaya Admin (' + payment + '): Rp' + totals.adminFee.toLocaleString('id-ID');
-            orderText += '%0ATotal: Rp' + totals.total.toLocaleString('id-ID');
-
-            // Kirim ke nomor WA penjual (SELLER_WA_NUMBER)
             const waUrl = 'https://wa.me/' + SELLER_WA_NUMBER + '?text=' + encodeURIComponent(orderText);
             window.open(waUrl, '_blank');
 
