@@ -510,26 +510,26 @@
 <script>
 (function(){
   const PRODUCTS = [
-   {id:1,name:'Luxury Car',price:36260,category:'Gamepass',img:'https://tr.rbxcdn.com/180DAY-415d1c20afc198d8533caab177ededd1/150/150/Image/Webp/noFilter',alt:'Luxury Car',desc:'Gamepass membuka mobil mewah di CDID.'},
-    {id:2,name:'Rare Imports',price:26460,category:'Gamepass',img:'https://tr.rbxcdn.com/180DAY-90221a5fb721a3dbcb06a63195c2dae0/150/150/Image/Webp/noFilter',alt:'Rare Imports',desc:'Akses ke mobil impor langka dan eksklusif.'},
-    {id:3,name:'Retro Car',price:23660,category:'Gamepass',img:'https://tr.rbxcdn.com/180DAY-ebad1a5562847ef0c7c149c33e2538f8/150/150/Image/Webp/noFilter',alt:'Retro Car',desc:'Koleksi mobil retro klasik yang unik.'},
-    {id:4,name:'Emergency Vehicle',price:19460,category:'Gamepass',img:'https://tr.rbxcdn.com/180DAY-bcfb291fa7cb95688a5ad5bd58d0558e/150/150/Image/Webp/noFilter',alt:'Emergency Vehicle',desc:'Akses kendaraan darurat eksklusif.'},
-    {id:5,name:'Additional Ownable Car',price:13860,category:'Gamepass',img:'https://tr.rbxcdn.com/180DAY-af917a5bb5a5b74a5bd3e9a578b39de2/150/150/Image/Webp/noFilter',alt:'Additional car slot',desc:'Slot mobil tambahan +1.'},
-    {id:6,name:'2x Additional Ownable Car',price:37660,category:'Gamepass',img:'https://tr.rbxcdn.com/180DAY-b7d914250a4a7f504fe2f582a52bfd9d/150/150/Image/Webp/noFilter',alt:'2 additional car slots',desc:'Dua slot mobil tambahan (+2).'},
-    {id:7,name:'Paycheck Booster (2x)',price:55860,category:'Gamepass',img:'https://tr.rbxcdn.com/180DAY-a1f2f58525ddfd91eba4b260a75cf11e/150/150/Image/Webp/noFilter',alt:'Double Paycheck',desc:'Dapatkan gaji dua kali lipat.'},
-    {id:8,name:'+50% Job Earning',price:55860,category:'Gamepass',img:'https://tr.rbxcdn.com/180DAY-579bf928493630f26b3c3c21df1a49dc/150/150/Image/Webp/noFilter',alt:'+50% Job Earning',desc:'Pendapatan kerja meningkat +50%.'},
-    {id:9,name:'Luxury House',price:11060,category:'Gamepass',img:'https://tr.rbxcdn.com/180DAY-0b0ea29403b2b63365ef753893140bcb/150/150/Image/Webp/noFilter',alt:'Luxury House',desc:'Akses ke rumah mewah eksklusif.'},
-    {id:10,name:'Advanced Modification',price:34860,category:'Gamepass',img:'https://tr.rbxcdn.com/180DAY-5949172a173452eacd953070710f37c6/150/150/Image/Webp/noFilter',alt:'Advanced Modification',desc:'Opsi modifikasi lanjutan untuk kendaraan.'}
+   {id:1,name:'Luxury Car',price:34965,category:'Gamepass',img:'https://tr.rbxcdn.com/180DAY-415d1c20afc198d8533caab177ededd1/150/150/Image/Webp/noFilter',alt:'Luxury Car',desc:'Gamepass membuka mobil mewah di CDID.'},
+{id:2,name:'Rare Imports',price:26415,category:'Gamepass',img:'https://tr.rbxcdn.com/180DAY-90221a5fb721a3dbcb06a63195c2dae0/150/150/Image/Webp/noFilter',alt:'Rare Imports',desc:'Akses ke mobil impor langka dan eksklusif.'},
+{id:3,name:'Retro Car',price:22815,category:'Gamepass',img:'https://tr.rbxcdn.com/180DAY-ebad1a5562847ef0c7c149c33e2538f8/150/150/Image/Webp/noFilter',alt:'Retro Car',desc:'Koleksi mobil retro klasik yang unik.'},
+{id:4,name:'Emergency Vehicle',price:18765,category:'Gamepass',img:'https://tr.rbxcdn.com/180DAY-bcfb291fa7cb95688a5ad5bd58d0558e/150/150/Image/Webp/noFilter',alt:'Emergency Vehicle',desc:'Akses kendaraan darurat eksklusif.'},
+{id:5,name:'Additional Ownable Car',price:13365,category:'Gamepass',img:'https://tr.rbxcdn.com/180DAY-af917a5bb5a5b74a5bd3e9a578b39de2/150/150/Image/Webp/noFilter',alt:'Additional car slot',desc:'Slot mobil tambahan +1.'},
+{id:6,name:'2x Additional Ownable Car',price:36215,category:'Gamepass',img:'https://tr.rbxcdn.com/180DAY-b7d914250a4a7f504fe2f582a52bfd9d/150/150/Image/Webp/noFilter',alt:'2 additional car slots',desc:'Dua slot mobil tambahan (+2).'},
+{id:7,name:'Paycheck Booster (2x)',price:51865,category:'Gamepass',img:'https://tr.rbxcdn.com/180DAY-a1f2f58525ddfd91eba4b260a75cf11e/150/150/Image/Webp/noFilter',alt:'Double Paycheck',desc:'Dapatkan gaji dua kali lipat.'},
+{id:8,name:'+50% Job Earning',price:51865,category:'Gamepass',img:'https://tr.rbxcdn.com/180DAY-579bf928493630f26b3c3c21df1a49dc/150/150/Image/Webp/noFilter',alt:'+50% Job Earning',desc:'Pendapatan kerja meningkat +50%.'},
+{id:9,name:'Luxury House',price:10665,category:'Gamepass',img:'https://tr.rbxcdn.com/180DAY-0b0ea29403b2b63365ef753893140bcb/150/150/Image/Webp/noFilter',alt:'Luxury House',desc:'Akses ke rumah mewah eksklusif.'},
+{id:10,name:'Advanced Modification',price:33365,category:'Gamepass',img:'https://tr.rbxcdn.com/180DAY-5949172a173452eacd953070710f37c6/150/150/Image/Webp/noFilter',alt:'Advanced Modification',desc:'Opsi modifikasi lanjutan untuk kendaraan.'}
   ,
-  { id: 11, name: '50 Robux', price: 7000, category: 'Robux', desc: 'Pembelian 50 Robux.' , img: 'https://upload.wikimedia.org/wikipedia/commons/c/c7/Robux_2019_Logo_gold.svg'},
-  { id: 12, name: '100 Robux', price: 14000, category: 'Robux', desc: 'Pembelian 100 Robux.' , img: 'https://upload.wikimedia.org/wikipedia/commons/c/c7/Robux_2019_Logo_gold.svg'},
-  { id: 13, name: '150 Robux', price: 21000, category: 'Robux', desc: 'Pembelian 150 Robux.' , img: 'https://upload.wikimedia.org/wikipedia/commons/c/c7/Robux_2019_Logo_gold.svg'},
-  { id: 14, name: '200 Robux', price: 28000, category: 'Robux', desc: 'Pembelian 200 Robux.' , img: 'https://upload.wikimedia.org/wikipedia/commons/c/c7/Robux_2019_Logo_gold.svg'},
-  { id: 15, name: '250 Robux', price: 35000, category: 'Robux', desc: 'Pembelian 250 Robux.' , img: 'https://upload.wikimedia.org/wikipedia/commons/c/c7/Robux_2019_Logo_gold.svg'},
-  { id: 16, name: '300 Robux', price: 42000, category: 'Robux', desc: 'Pembelian 300 Robux.' , img: 'https://upload.wikimedia.org/wikipedia/commons/c/c7/Robux_2019_Logo_gold.svg'},
-  { id: 17, name: '350 Robux', price: 49000, category: 'Robux', desc: 'Pembelian 350 Robux.' , img: 'https://upload.wikimedia.org/wikipedia/commons/c/c7/Robux_2019_Logo_gold.svg'},
-  { id: 18, name: '400 Robux', price: 56000, category: 'Robux', desc: 'Pembelian 400 Robux.' , img: 'https://upload.wikimedia.org/wikipedia/commons/c/c7/Robux_2019_Logo_gold.svg'},
-  { id: 19, name: '450 Robux', price: 63000, category: 'Robux', desc: 'Pembelian 450 Robux.' , img: 'https://upload.wikimedia.org/wikipedia/commons/c/c7/Robux_2019_Logo_gold.svg'}
+  {id:11,name:'50 Robux',price:6750,category:'Robux',desc:'Pembelian 50 Robux.',img:'https://upload.wikimedia.org/wikipedia/commons/c/c7/Robux_2019_Logo_gold.svg'},
+{id:12,name:'100 Robux',price:13500,category:'Robux',desc:'Pembelian 100 Robux.',img:'https://upload.wikimedia.org/wikipedia/commons/c/c7/Robux_2019_Logo_gold.svg'},
+{id:13,name:'150 Robux',price:20250,category:'Robux',desc:'Pembelian 150 Robux.',img:'https://upload.wikimedia.org/wikipedia/commons/c/c7/Robux_2019_Logo_gold.svg'},
+{id:14,name:'200 Robux',price:27000,category:'Robux',desc:'Pembelian 200 Robux.',img:'https://upload.wikimedia.org/wikipedia/commons/c/c7/Robux_2019_Logo_gold.svg'},
+{id:15,name:'250 Robux',price:33750,category:'Robux',desc:'Pembelian 250 Robux.',img:'https://upload.wikimedia.org/wikipedia/commons/c/c7/Robux_2019_Logo_gold.svg'},
+{id:16,name:'300 Robux',price:40500,category:'Robux',desc:'Pembelian 300 Robux.',img:'https://upload.wikimedia.org/wikipedia/commons/c/c7/Robux_2019_Logo_gold.svg'},
+{id:17,name:'350 Robux',price:47250,category:'Robux',desc:'Pembelian 350 Robux.',img:'https://upload.wikimedia.org/wikipedia/commons/c/c7/Robux_2019_Logo_gold.svg'},
+{id:18,name:'400 Robux',price:54000,category:'Robux',desc:'Pembelian 400 Robux.',img:'https://upload.wikimedia.org/wikipedia/commons/c/c7/Robux_2019_Logo_gold.svg'},
+{id:19,name:'450 Robux',price:60750,category:'Robux',desc:'Pembelian 450 Robux.',img:'https://upload.wikimedia.org/wikipedia/commons/c/c7/Robux_2019_Logo_gold.svg'},
 ];
 
   const CART_KEY = 'uds_cart_v1';
