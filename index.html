@@ -283,7 +283,7 @@
     <div class="container hero-grid">
       <div>
         <div class="hero-title">Lebih Cepat, Lebih Aman — Dapatkan Robux & Gamepass CDID</div>
-        <div class="hero-sub">Promo harian, pengiriman cepat, dan panduan pembuatan Gamepass. Pilih produk, tambahkan ke keranjang, dan checkout lewat WhatsApp.</div>
+        <div class="hero-sub">Pelayanan responsif, pengiriman cepat, dan panduan pembuatan Gamepass. Pilih produk, tambahkan ke keranjang, dan checkout lewat WhatsApp.</div>
         <div class="cta-row">
           <button class="btn-primary" id="btnShopNow">Mulai Belanja</button>
           <button class="btn-ghost" id="btnHow" aria-haspopup="dialog">Cara Order</button>
@@ -330,6 +330,7 @@
             <li>Buat Gamepass terlebih dahulu jika tidak tahu cara membuatnya anda bisa mengunjungi FAQ.</li>
             <li>Gunakan metode pembayaran QRIS atau GoPay jika anda memang membutuhkan produk secepatnya.</li>
             <li>Chat customer service jika ada kendala seperti proses checkout, pemilihan produk dll.</li>
+            <li>Jika robux tidak masuk dalam waktu 5-6 hari (belum pending), bisa laporkan ke Customer Service beserta bukti transaksinya</li>
           </ul>
         </div>
       </aside>
@@ -449,7 +450,7 @@
       <div style="display:flex;justify-content:space-between;gap:12px;align-items:center;flex-wrap:wrap">
         <div>
           <div style="color:var(--accent);font-weight:700">UrbanDriveStore</div>
-          <div style="color:var(--muted);font-size:13px">Contact: 0851-8328-3404 (WhatsApp)</div>
+          <div style="color:var(--muted);font-size:13px">Customer Service: 0851-8328-3404 (WhatsApp)</div>
         </div>
         <div style="color:var(--muted);font-size:13px">© 2025 UrbanDriveStore. All rights reserved.</div>
       </div>
@@ -754,8 +755,9 @@
 
     let paymentMethod = checkoutPaymentSelect.value;
     let adminFee = 0;
-    if(['Dana','OVO','GoPay'].includes(paymentMethod)) adminFee = 1000; // QRIS tidak ada di opsi select
-    else if(paymentMethod === 'Mandiri') adminFee = 2500; // Tambahkan Mandiri jika ada di select
+    if(['Dana','OVO','GoPay'].includes(paymentMethod)) adminFee = 1000;
+    else if(paymentMethod === 'QRIS') adminFee = 1500;
+    else if(paymentMethod === 'Mandiri') adminFee = 2500;
 
     subtotalDisplay.textContent = 'Rp' + subtotal.toLocaleString('id-ID');
     adminFeeDisplay.textContent = 'Rp' + adminFee.toLocaleString('id-ID');
